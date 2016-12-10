@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+	   default-autowire="byName">
+	<bean id = "thriftPoolConfig" class = "org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+		<property name="maxTotal" value="${thrift.maxTotal}" />
+		<!-- 最大Idle-->
+		<property name="maxIdle" value="${thrift.maxIdle}" />
+		<!-- 最小Idle -->
+		<property name="minIdle" value="${thrift.minIdle}" />
+		<!-- 获得实例的时候是否检查连接可用性 -->
+		<property name="testOnBorrow" value="${thrift.testOnBorrow}" />
+		<!-- return 一个j实例给pool时，是否检查可用性） -->
+		<!-- <property name="testOnReturn" value="${thrift.testOnReturn}" /> -->
+		<!-- idle状态监测用异步线程evict进行检查， -->
+		<!--  <property name="testWhileIdle" value="true" /> -->
+		<!-- <property name="numTestsPerEvictionRun" value="10" /> -->
+		<!-- test idle 线程的时间间隔 -->
+		<!-- <property name="timeBetweenEvictionRunsMillis" value="60000" /> -->
+		<!--最大等待wait时间-->
+		<property name="maxWaitMillis" value="${thrift.maxWaitMillis}" />
+		<property name="blockWhenExhausted" value="${thrift.blockWhenExhausted}" />
+	</bean>
+
+	<bean id = "waterMarkClient" class = "com.gether.bigdata.thrift.WaterMarkClient">
+		<property name="hostport" value="${thrift.hostport}" />
+		<property name="timeout" value="${thrift.timeout}" />
+		<property name="thriftPoolConfig" ref="thriftPoolConfig" />
+		<property name="jedisService" ref="jedisService" />
+	</bean>
+</beans>

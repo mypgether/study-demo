@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+	   default-autowire="byName">
+
+	<bean id="jedisService" class="com.gether.bigdata.redis.JedisServiceImpl" init-method="init" destroy-method="destroy">
+		<property name="clusters" value="${jedis.clusters}"></property>
+		<property name="maxIdle" value="${jedis.maxIdle}"></property>
+		<property name="maxTotal" value="${jedis.maxTotal}"></property>
+		<property name="minIdle" value="${jedis.minIdle}"></property>
+		<property name="maxWaitMillis" value="${jedis.maxWaitMillis}"></property>
+		<property name="borrow" value="${jedis.isBorrow}"></property>
+		<property name="cluster" value="${jedis.isCluster}"></property>
+		<property name="password" value="${jedis.password}"></property>
+	</bean>
+</beans>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hbaseConnection" class="com.gether.bigdata.hadoop.hbase.HbaseConnection" init-method="init" destroy-method="destroy">
+        <property name="clientPort" value="2181"/>
+        <property name="zkQuorum" value="10.211.55.6"/>
+        <property name="master" value="10.211.55.6"/>
+        <property name="sessionTimeout" value="6000"/>
+    </bean>
+
+    <bean id="hiveConnection" class="com.gether.bigdata.hadoop.hive.HiveConnection" init-method="init" destroy-method="destory">
+        <property name="url" value="jdbc:hive2://10.211.55.6:10000/default"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
+    </bean>
+</beans>
