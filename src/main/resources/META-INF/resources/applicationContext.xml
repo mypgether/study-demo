@@ -11,4 +11,5 @@
     <!--<import resource="application-hadoop.xml"/>-->
     <import resource="application-jedis.xml"/>
     <import resource="application-thrift.xml"/>
+    <import resource="application-job.xml"/>
 </beans>

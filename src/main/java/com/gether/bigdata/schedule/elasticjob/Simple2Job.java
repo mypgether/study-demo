@@ -7,7 +7,7 @@ import com.dangdang.ddframe.job.api.simple.SimpleJob;
  * @author: myp
  * @date: 16/8/20
  */
-public class MySimpleJob implements SimpleJob {
+public class Simple2Job implements SimpleJob {
 
     static int time = 0;
 
@@ -29,9 +29,8 @@ public class MySimpleJob implements SimpleJob {
             // case n: ...
         }
         time = time + 1;
-        System.out.println("jobStart,times:" + time + "====>" + shardingContext.toString());
+        System.err.println("simple 2 start:" + time + "====>" + shardingContext.toString());
         long now = System.currentTimeMillis();
-        System.err.println("time span:" + (now - lastTime) / 1000);
         lastTime = now;
     }
 }

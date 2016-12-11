@@ -1,19 +1,20 @@
-﻿<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
-       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-       <!--xmlns:context="http://www.springframework.org/schema/context"-->
-       <!--xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"-->
-       <!--xsi:schemaLocation="http://www.springframework.org/schema/beans-->
-                        <!--http://www.springframework.org/schema/beans/spring-beans.xsd-->
-	                    <!--http://www.springframework.org/schema/context-->
-	                    <!--http://www.springframework.org/schema/context/spring-context-3.2.xsd-->
-                        <!--http://www.dangdang.com/schema/ddframe/reg-->
-                        <!--http://www.dangdang.com/schema/ddframe/reg/reg.xsd">-->
-    <!--&lt;!&ndash;配置作业注册中心 &ndash;&gt;-->
-    <!--<reg:zookeeper id="regCenter" server-lists="localhost:2181" namespace="elasticalljobs" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3" />-->
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.dangdang.com/schema/ddframe/reg
+                        http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+                        http://www.dangdang.com/schema/ddframe/job
+                        http://www.dangdang.com/schema/ddframe/job/job.xsd
+                        ">
+    <!--配置作业注册中心 -->
+    <reg:zookeeper id="registerCenter" server-lists="10.211.55.6:2181" namespace="elastic-job-demo" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3" />
 
-    <!--&lt;!&ndash; 配置作业A&ndash;&gt;-->
-    <!--&lt;!&ndash;<job:bean id="oneOffElasticJob" class="com.gether.research.jobs.elasticjob.jobbean.OneoffJob" regCenter="regCenter" cron="0/10 * * * * ?"   shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" />&ndash;&gt;-->
-    <!--&lt;!&ndash; 配置作业B&ndash;&gt;-->
-    <!--&lt;!&ndash;<job:bean id="perpetualElasticJob" class="xxx.MyPerpetualElasticJob" regCenter="regCenter" cron="0/10 * * * * ?" shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" processCountIntervalSeconds="10" concurrentDataProcessThreadCount="10" />&ndash;&gt;-->
-<!--</beans>-->
+    <!-- 配置作业A-->
+    <!--<job:bean id="oneOffElasticJob" class="com.gether.research.jobs.elasticjob.jobbean.OneoffJob" regCenter="regCenter" cron="0/10 * * * * ?"   shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" />-->
+    <!-- 配置作业B-->
+    <!--<job:bean id="perpetualElasticJob" class="xxx.MyPerpetualElasticJob" regCenter="regCenter" cron="0/10 * * * * ?" shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" processCountIntervalSeconds="10" concurrentDataProcessThreadCount="10" />-->
+</beans>
