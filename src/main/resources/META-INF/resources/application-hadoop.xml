@@ -4,15 +4,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="hbaseConnection" class="com.gether.bigdata.hadoop.hbase.HbaseConnection" init-method="init" destroy-method="destroy">
-        <property name="clientPort" value="2181"/>
-        <property name="zkQuorum" value="10.211.55.6"/>
-        <property name="master" value="10.211.55.6"/>
-        <property name="sessionTimeout" value="6000"/>
+        <property name="zkQuorum" value="${hbase.zkQuorum}"/>
+        <property name="master" value="${hbase.master}"/>
+        <property name="sessionTimeout" value="${hbase.session.timeout}"/>
     </bean>
 
     <bean id="hiveConnection" class="com.gether.bigdata.hadoop.hive.HiveConnection" init-method="init" destroy-method="destory">
-        <property name="url" value="jdbc:hive2://10.211.55.6:10000/default"/>
-        <property name="username" value=""/>
-        <property name="password" value=""/>
+        <property name="url" value="${hive.url}"/>
+        <property name="username" value="${hive.username}"/>
+        <property name="password" value="${hive.password}"/>
     </bean>
 </beans>

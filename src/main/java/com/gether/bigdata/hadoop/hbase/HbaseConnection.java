@@ -31,8 +31,6 @@ public class HbaseConnection {
     private static final Logger log = LoggerFactory.getLogger(HbaseConnection.class);
 
     private Connection connection = null;
-    // zk端口
-    private String clientPort;
     // zk服务地址
     private String zkQuorum;
     // hbase连接地址
@@ -42,9 +40,10 @@ public class HbaseConnection {
 
     public void init() {
         Configuration conf = HBaseConfiguration.create();
+        String[] zkHostPort = this.zkQuorum.split(":");
         conf.set("hbase.master", this.master);
-        conf.set("hbase.zookeeper.quorum", this.zkQuorum);
-        conf.set("hbase.zookeeper.property.clientPort", this.clientPort);
+        conf.set("hbase.zookeeper.quorum", zkHostPort[0]);
+        conf.set("hbase.zookeeper.property.clientPort", zkHostPort[1]);
         conf.set("zookeeper.session.timeout", this.sessionTimeout);
         try {
             connection = ConnectionFactory.createConnection(conf);
@@ -61,13 +60,6 @@ public class HbaseConnection {
             }
         } catch (IOException e) {
         }
-    }
-
-    /**
-     * @param clientPort
-     */
-    public void setClientPort(String clientPort) {
-        this.clientPort = clientPort;
     }
 
     /**

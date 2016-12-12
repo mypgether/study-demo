@@ -3,6 +3,7 @@ package com.gether.bigdata;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan
 @Configuration
 @EnableTransactionManagement
-
+@EnableConfigurationProperties
 @ImportResource("classpath:META-INF/resources/applicationContext.xml")
 public class Application {
 
