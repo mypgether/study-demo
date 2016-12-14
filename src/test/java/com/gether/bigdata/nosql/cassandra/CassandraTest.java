@@ -9,6 +9,8 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * Created by myp on 2016/12/7.
  */
@@ -95,7 +97,7 @@ public class CassandraTest {
         ExecutionInfo info = rs.getExecutionInfo();
         PagingState pageState = info.getPagingState();
         System.err.println(pageState.toString());
-        System.out.println(pageState.toBytes());
+        System.out.println(Arrays.toString(pageState.toBytes()));
         for (Row row : rs) {
             System.out.println(rs.getAvailableWithoutFetching() + ":" + rs.isFullyFetched());
             if (rs.getAvailableWithoutFetching() == pageSize && !rs.isFullyFetched())
