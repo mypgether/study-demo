@@ -62,7 +62,7 @@ public class JobOperationController {
     @GetMapping("/quartz/add")
     public String quartzaddjob(@RequestParam(value = "jobName", defaultValue = "demoJob") String jobName,
                                @RequestParam(value = "cron", defaultValue = "*/5 * * * * ?") String cron) throws SchedulerException {
-        JobKey jobKey = new JobKey(jobName, "JobDemoGroup");
+        JobKey jobKey = new JobKey("TrunoffJob", "JobDemoGroup");
         TriggerKey trikey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
 
         JobDataMap datamap = new JobDataMap();
@@ -90,7 +90,10 @@ public class JobOperationController {
 
     @GetMapping("/quartz/delete")
     public boolean quartzdeleteJob(@RequestParam(value = "jobName", defaultValue = "demoJob") String jobName) throws SchedulerException {
-        JobKey jobKey = new JobKey(jobName, "JobDemoGroup");
-        return quartzScheduler.deleteJob(jobKey);
+        //return quartzScheduler.deleteJob(jobKey);
+        //quartzScheduler.pauseJobs(GroupMatcher.jobGroupEquals(jobGroup));
+        JobKey jobKey = new JobKey("TrunoffJob", "JobDemoGroup");
+        TriggerKey triggerkey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
+        return quartzScheduler.unscheduleJob(triggerkey);
     }
 }

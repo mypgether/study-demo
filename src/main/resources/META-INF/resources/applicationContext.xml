@@ -12,4 +12,5 @@
     <import resource="application-jedis.xml"/>
     <import resource="application-thrift.xml"/>
     <import resource="application-job.xml"/>
+    <import resource="application-jdbc.xml"/>
 </beans>

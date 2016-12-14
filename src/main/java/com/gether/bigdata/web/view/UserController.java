@@ -2,9 +2,12 @@ package com.gether.bigdata.web.view;
 
 import com.gether.bigdata.domain.user.User;
 import com.gether.bigdata.service.UserService;
+import com.gether.bigdata.service.UserServiceImpl;
+import com.gether.bigdata.util.JsonUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,36 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @ApiOperation(value = "用户批量添加", notes = "")
+    @RequestMapping(value = "/batchAdd", method = RequestMethod.GET)
+    //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    //@Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
+    public void userbatchAdd() {
+        UserServiceImpl.i = 0;
+        // 处理"/users/"的GET请求，用来获取用户列表
+        // 还可以通过@RequestParam从页面中传递参数来进行查询条件或者翻页信息的传递
+        Long id1 = System.currentTimeMillis();
+        Long id2 = System.currentTimeMillis() + 1;
+        userService.add(id1, "123sadasd", 1);
+        userService.add(id2, "name2", 2);
+        userService.add(System.currentTimeMillis() + 2, "name3", 3);
+        userService.add(System.currentTimeMillis() + 3, "name4", 4);
+        userService.add(System.currentTimeMillis() + 4, "name5", 5);
+        // 查数据库，应该有5个用户
+        //Assert.assertEquals(5, userSerivce.list().size());
+
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id1)));
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id2)));
+
+        userService.update(id2, "change name", 10);
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id2)));
+
+        // 删除两个用户
+        userService.delete(id1);
+        userService.delete(id2);
+    }
 
     @ApiOperation(value = "获取用户列表", notes = "")
     @RequestMapping(value = "/", method = RequestMethod.GET)

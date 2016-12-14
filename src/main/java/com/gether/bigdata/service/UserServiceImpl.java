@@ -30,18 +30,24 @@ public class UserServiceImpl implements  UserService {
 
     private static final boolean jdbcMode = false;
 
+    public static int i = 0;
+
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void add(Long id, String name, Integer age) {
         if (jdbcMode) {
             jdbcTemplate.update("insert into T_USER(id,NAME, AGE) values(?, ?, ?)", id, name, age);
         } else {
             userMapper.insert(id, name, age);
+            i = i + 1;
+            //if (i == 3) {
+            //    throw new RuntimeException("呀呀出错了");
+            //}
         }
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED)
     public User getById(Long id) {
         if (jdbcMode) {
             return jdbcTemplate.queryForObject("select * from T_USER where id=?", new Object[]{id}, new RowMapper<User>() {
@@ -76,7 +82,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void update(Long id, String name, Integer age) {
         if (jdbcMode) {
             jdbcTemplate.update("update T_USER set name=?,age=? where id=?", name, age, id);
@@ -86,7 +92,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void delete(Long id) {
         if (jdbcMode) {
             jdbcTemplate.update("delete from T_USER where id = ?", id);
@@ -96,7 +102,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void deleteAll() {
         if (jdbcMode) {
             jdbcTemplate.update("delete from T_USER");
@@ -106,7 +112,7 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void insertFlow() throws ParseException {
         if (jdbcMode) {
         } else {

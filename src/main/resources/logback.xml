@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- log INFO or higher messages to the console -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--&lt;!&ndash; 时间滚动输出 level为 ERROR日志 &ndash;&gt;-->
+	<!--<appender name="FILE-ERROR"-->
+	<!--class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+	<!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+	<!--<level>ERROR</level>-->
+	<!--<onMatch>ACCEPT</onMatch>-->
+	<!--<onMismatch>DENY</onMismatch>-->
+	<!--</filter>-->
+	<!--<file>${logDir}/error.log</file>-->
+	<!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+	<!--&lt;!&ndash; daily rollover &ndash;&gt;-->
+	<!--<fileNamePattern>${logDir}/error.%d{yyyy-MM-dd}.%i.log-->
+	<!--</fileNamePattern>-->
+	<!--<timeBasedFileNamingAndTriggeringPolicy-->
+	<!--class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+	<!--&lt;!&ndash; or whenever the file size reaches xxMB &ndash;&gt;-->
+	<!--<maxFileSize>${maxFileSize}MB</maxFileSize>-->
+	<!--</timeBasedFileNamingAndTriggeringPolicy>-->
+	<!--</rollingPolicy>-->
+	<!--<encoder>-->
+	<!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - -->
+	<!--%msg%n</pattern>-->
+	<!--</encoder>-->
+	<!--</appender>-->
+
+	<!--&lt;!&ndash; 时间滚动输出 level为 INFO 日志 &ndash;&gt;-->
+	<!--<appender name="SUMO-LOGIC"-->
+	<!--class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+	<!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+	<!--<level>INFO</level>-->
+	<!--&lt;!&ndash; <onMatch>ACCEPT</onMatch> <onMismatch>DENY</onMismatch> &ndash;&gt;-->
+	<!--</filter>-->
+	<!--<file>${logDir}/sumo-logic.log</file>-->
+	<!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+	<!--&lt;!&ndash; daily rollover &ndash;&gt;-->
+	<!--<fileNamePattern>-->
+	<!--${logDir}/sumo-logic.%d{yyyy-MM-dd}.%i.log-->
+	<!--</fileNamePattern>-->
+	<!--<timeBasedFileNamingAndTriggeringPolicy-->
+	<!--class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+	<!--&lt;!&ndash; or whenever the file size reaches xxMB &ndash;&gt;-->
+	<!--<maxFileSize>${maxFileSize}MB</maxFileSize>-->
+	<!--</timeBasedFileNamingAndTriggeringPolicy>-->
+	<!--</rollingPolicy>-->
+	<!--<encoder>-->
+	<!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>-->
+	<!--</encoder>-->
+	<!--</appender>-->
+
+
+	<!-- log everything to a rolling file -->
+	<!--<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+	<!--<file>driver.log</file>-->
+	<!--<encoder>-->
+	<!--<pattern>%-5p [%d{ISO8601}] [%t] %F:%L - %msg%n</pattern>-->
+	<!--</encoder>-->
+	<!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+	<!--&lt;!&ndash; daily rollover &ndash;&gt;-->
+	<!--<fileNamePattern>driver.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+	<!--&lt;!&ndash; keep 30 days' worth of history &ndash;&gt;-->
+	<!--<maxHistory>30</maxHistory>-->
+	<!--</rollingPolicy>-->
+	<!--</appender>-->
+
+	<!-- use AsyncAppender for lower latencies -->
+	<appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="console" />
+		<!--<appender-ref ref="file" />-->
+	</appender>
+
+	<!--
+    Turn on slow query logging by setting this logger to DEBUG;
+    set level to TRACE to also log query parameters
+    -->
+	<logger name="com.datastax.driver.core.QueryLogger.SLOW" level="TRACE" additivity="false" >
+		<appender-ref ref="async" />
+	</logger>
+
+	<!--<logger name="com.datastax.driver.core.ClockFactory" level="INFO" additivity="false" >-->
+	<!--<appender-ref ref="async" />-->
+	<!--</logger>-->
+
+	<logger name="com.datastax.driver.core.QueryLogger.ERROR" level="TRACE" additivity="false" >
+		<appender-ref ref="async" />
+	</logger>
+
+	<logger name="org.springframework.boot" level="INFO">
+		<appender-ref ref="async" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="async" />
+	</root>
+</configuration>

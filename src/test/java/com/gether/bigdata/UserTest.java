@@ -17,17 +17,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(Application.class)
-
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
 public class UserTest {
     @Autowired
-    private UserService userSerivce;
+    private UserService userService;
 
     @Before
     public void setUp() {
         // 准备，清空user表
-        userSerivce.deleteAll();
+        //userService.deleteAll();
     }
 
     @Test
@@ -36,28 +33,28 @@ public class UserTest {
         //Long id1 = IdCenterImpl.getId();
         //Long id2 = IdCenterImpl.getId();
         Long id1 = System.currentTimeMillis();
-        Long id2 = System.currentTimeMillis();
-        userSerivce.add(id1, "123sadasd", 1);
+        Long id2 = System.currentTimeMillis() + 1;
+        userService.add(id1, "123sadasd", 1);
         //if (true) {
         //    throw new Exception("呀呀出错了");
         //}
-        userSerivce.add(id2, "name2", 2);
-        userSerivce.add(System.currentTimeMillis(), "name3", 3);
-        userSerivce.add(System.currentTimeMillis(), "name4", 4);
-        userSerivce.add(System.currentTimeMillis(), "name5", 5);
+        userService.add(id2, "name2", 2);
+        userService.add(System.currentTimeMillis() + 2, "name3", 3);
+        userService.add(System.currentTimeMillis() + 3, "name4", 4);
+        userService.add(System.currentTimeMillis() + 4, "name5", 5);
         // 查数据库，应该有5个用户
         //Assert.assertEquals(5, userSerivce.list().size());
 
-        System.out.println(JsonUtils.toJsonStrWithNull(userSerivce.getById(id1)));
-        System.out.println(JsonUtils.toJsonStrWithNull(userSerivce.getById(id2)));
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id1)));
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id2)));
 
-        userSerivce.update(id2, "change name", 10);
-        System.out.println(JsonUtils.toJsonStrWithNull(userSerivce.getById(id2)));
+        userService.update(id2, "change name", 10);
+        System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(id2)));
 
         // 删除两个用户
-        userSerivce.delete(id1);
-        userSerivce.delete(id2);
+        userService.delete(id1);
+        userService.delete(id2);
         // 查数据库，应该有3个用户
-        //Assert.assertEquals(3, userSerivce.list().size());
+        //Assert.assertEquals(3, userService.list().size());
     }
 }

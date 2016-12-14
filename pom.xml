@@ -33,45 +33,70 @@
         <commons.configuration.version>1.10</commons.configuration.version>
 
         <fastjson.version>1.1.46</fastjson.version>
-        <logback.version>1.0.9</logback.version>
+        <logback.version>1.1.8</logback.version>
         <slf4j.version>1.7.18</slf4j.version>
 
         <hector.core.version>2.0-0</hector.core.version>
+
         <cassandra.driver.version>3.1.0</cassandra.driver.version>
         <kafka.version>0.10.1.0</kafka.version>
         <hive.version>1.2.1</hive.version>
         <hbase.version>1.2.1</hbase.version>
+        <guava.version>17.0</guava.version>
+
         <elastic.job.version>2.0.3</elastic.job.version>
         <!--<elastic.job.version>2.0.0-SNAPSHOT</elastic.job.version>-->
         <quartz.version>2.2.1</quartz.version>
+
         <druid.version>1.0.24</druid.version>
+        <mybatis.springboot.version>1.1.1</mybatis.springboot.version>
+        <mysql.connector.version>5.1.21</mysql.connector.version>
+
+        <swagger.version>2.2.2</swagger.version>
     </properties>
 
     <dependencies>
+
+        <!-- 数据库jdb -->
+        <!-- 事务管理功能 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.springboot.version}</version>
+        </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+
         <!-- quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>${quartz.version}</version>
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.slf4j</groupId>-->
-                    <!--<artifactId>slf4j-api</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz-jobs</artifactId>
             <version>${quartz.version}</version>
-        </dependency>
-
-        <!-- druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
         </dependency>
 
         <!-- cassandra -->
@@ -130,24 +155,11 @@
             </exclusions>
         </dependency>
 
-        <!--&lt;!&ndash; 引入elastic-job核心模块 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>com.dangdang</groupId>-->
-        <!--<artifactId>elastic-job-core</artifactId>-->
-        <!--<version>${elastic.job.version}</version>-->
-        <!--</dependency>-->
-        <!--&lt;!&ndash; 使用springframework自定义命名空间时引入 &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>com.dangdang</groupId>-->
-        <!--<artifactId>elastic-job-spring</artifactId>-->
-        <!--<version>${elastic.job.version}</version>-->
-        <!--</dependency>-->
-
         <!-- hbase -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
-            <version>${hive.version}</version>
+            <version>${hbase.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -167,7 +179,7 @@
         <!--<dependency>-->
         <!--<groupId>org.apache.hbase</groupId>-->
         <!--<artifactId>hbase-server</artifactId>-->
-        <!--<version>1.2.1</version>-->
+        <!--<version>${hbase.version}</version>-->
         <!--<exclusions>-->
         <!--<exclusion>-->
         <!--<groupId>org.slf4j</groupId>-->
@@ -211,8 +223,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <!--<version>16.0.1</version>-->
-            <version>17.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- Hive -->
@@ -323,22 +334,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- 数据库jdbc -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.21</version>
-        </dependency>
-
         <!-- rabbitmq -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -360,12 +355,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.2.2</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.2.2</version>
+            <version>${swagger.version}</version>
         </dependency>
 
         <!-- commons -->
