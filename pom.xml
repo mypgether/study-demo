@@ -53,9 +53,40 @@
         <mysql.connector.version>5.1.21</mysql.connector.version>
 
         <swagger.version>2.2.2</swagger.version>
+
+        <netflix.servo.version>0.7.9</netflix.servo.version>
+        <netflix.archaius.version>0.6.6</netflix.archaius.version>
     </properties>
 
     <dependencies>
+        <!-- netflix -->
+        <dependency>
+            <groupId>com.netflix.servo</groupId>
+            <artifactId>servo-aws</artifactId>
+            <version>${netflix.servo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.amazonaws</groupId>
+                    <artifactId>aws-java-sdk</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.servo</groupId>
+            <artifactId>servo-graphite</artifactId>
+            <version>${netflix.servo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.servo</groupId>
+            <artifactId>servo-core</artifactId>
+            <version>${netflix.servo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.archaius</groupId>
+            <artifactId>archaius-core</artifactId>
+            <version>${netflix.archaius.version}</version>
+        </dependency>
+
         <!-- 数据库jdb -->
         <!-- 事务管理功能 -->
         <dependency>
