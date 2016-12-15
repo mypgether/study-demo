@@ -2,6 +2,7 @@ package com.gether.bigdata.service;
 
 import com.gether.bigdata.dao.mapper.UserMapper;
 import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.redis.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements  UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private JedisService jedisService;
+
     private static final boolean jdbcMode = false;
 
     public static int i = 0;
@@ -47,8 +51,34 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public User getById(Long id) {
+        Object result = jedisService.getObject(String.valueOf(id));
+        if (result == null) {
+            String disLockKey = "distributelock" + String.valueOf(id);
+            try {
+                // 高并发环境下，会导致冲击db的压力，加入分布式锁即可。对锁设置超时时间，防止意外
+                boolean lock = jedisService.setnx(disLockKey, "lock", 10);
+                if (lock) {
+                    System.err.println("get lock ...");
+                    result = getFromBD(id);
+                    jedisService.setObject(String.valueOf(id), result, 100);
+                } else {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                    }
+                    getById(id);
+                }
+            } finally {
+                // 记得需要释放锁
+                jedisService.delete(disLockKey);
+            }
+        }
+        return (User) result;
+    }
+
+    private User getFromBD(Long id) {
+        System.err.println("get data from db");
         if (jdbcMode) {
             return jdbcTemplate.queryForObject("select * from T_USER where id=?", new Object[]{id}, new RowMapper<User>() {
                 @Override

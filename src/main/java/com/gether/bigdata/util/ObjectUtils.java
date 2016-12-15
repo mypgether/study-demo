@@ -63,7 +63,7 @@ public class ObjectUtils {
 				return baos.toByteArray();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(object.getClass().getName() + " need implments java.io.Serializable");
 		}
 		return null;
 	}
@@ -83,7 +83,7 @@ public class ObjectUtils {
 				return ois.readObject();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("obejct need implments java.io.Serializable");
 		}
 		return null;
 	}

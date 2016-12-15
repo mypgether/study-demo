@@ -1,10 +1,12 @@
 package com.gether.bigdata.domain.user;
 
+import java.io.Serializable;
+
 /**
  * @author: myp
  * @date: 16/10/22
  */
-public class User {
+public class User implements Serializable {
 
     //@Value("${user.name}")
     private Long id;
@@ -37,4 +39,3 @@ public class User {
         this.age = age;
     }
 }
-

@@ -676,48 +676,74 @@ public class JedisClusterUtils {
 	 * @history:
 	 */
 	public static boolean set(String key, String value, int second) {
-
 		try {
 			jedisCluster.setex(key, second, value);
 			return true;
 		} catch (Exception ex) {
 			logger.error("set error.", ex);
+		}
+		return false;
+	}
 
+	public static boolean setObject(String key, Object value, int second) {
+		try {
+			jedisCluster.setex(toBytes(key), second, toBytes(value));
+			return true;
+		} catch (Exception ex) {
+			logger.error("set error.", ex);
+		}
+		return false;
+	}
+
+	public static boolean setnx(String key, String value, int second) {
+		try {
+			jedisCluster.setnx(key, value);
+			if (second > 0) {
+				jedisCluster.expire(key, second);
+			}
+			return true;
+		} catch (Exception ex) {
+			logger.error("set error.", ex);
 		}
 		return false;
 	}
 
 	public static boolean set(String key, String value) {
-
 		try {
 			jedisCluster.set(key, value);
 			return true;
 		} catch (Exception ex) {
 			logger.error("set error.", ex);
-
 		}
 		return false;
 	}
 
 	public static String get(String key, String defaultValue) {
-
 		try {
-			return jedisCluster.get(key) == null ? defaultValue : jedisCluster.get(key);
+			String value = jedisCluster.get(key);
+			return value == null ? defaultValue : value;
 		} catch (Exception ex) {
 			logger.error("get error.", ex);
+		}
+		return defaultValue;
+	}
 
+	public static Object getObject(String key, Object defaultValue) {
+		try {
+			byte[] bytes = jedisCluster.get(toBytes(key));
+			return bytes == null ? defaultValue : toObject(bytes);
+		} catch (Exception ex) {
+			logger.error("get error.", ex);
 		}
 		return defaultValue;
 	}
 
 	public static boolean del(String key) {
-
 		try {
 			jedisCluster.del(key);
 			return true;
 		} catch (Exception ex) {
 			logger.error("del error.", ex);
-
 		}
 		return false;
 	}
@@ -727,7 +753,6 @@ public class JedisClusterUtils {
 			return jedisCluster.incr(key);
 		} catch (Exception ex) {
 			logger.error("incr error.", ex);
-
 		}
 		return 0;
 	}

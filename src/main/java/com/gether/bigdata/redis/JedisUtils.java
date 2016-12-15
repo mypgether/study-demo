@@ -113,7 +113,7 @@ public class JedisUtils {
 		try {
 			jedis = getResource();
 			result = jedis.set(key, value);
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("set {} = {}", key, value);
@@ -124,6 +124,32 @@ public class JedisUtils {
 		}
 		return result;
 	}
+
+	/**
+	 * 不存在设置缓存
+	 *
+	 * @param key          键
+	 * @param value        值
+	 * @param cacheSeconds 超时时间，0为不超时
+	 * @return
+	 */
+	public static Long setnx(String key, String value, int cacheSeconds) {
+        Long result = null;
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            result = jedis.setnx(key, value);
+            if (cacheSeconds > 0) {
+                jedis.expire(key, cacheSeconds);
+            }
+            logger.debug("set {} = {}", key, value);
+        } catch (Exception e) {
+            logger.warn("set {} = {}", key, value, e);
+        } finally {
+            returnResource(jedis);
+        }
+        return result;
+    }
 
 	/**
 	 * 设置缓存
@@ -161,7 +187,7 @@ public class JedisUtils {
 		try {
 			jedis = getResource();
 			result = jedis.set(getBytesKey(key), toBytes(value));
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setObject {} = {}", key, value);
@@ -240,7 +266,7 @@ public class JedisUtils {
 				jedis.del(key);
 			}
 			result = jedis.rpush(key, (String[]) value.toArray());
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setList {} = {}", key, value);
@@ -273,7 +299,7 @@ public class JedisUtils {
 				list.add(toBytes(o));
 			}
 			result = jedis.rpush(getBytesKey(key), (byte[][]) list.toArray());
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setObjectList {} = {}", key, value);
@@ -400,7 +426,7 @@ public class JedisUtils {
 				jedis.del(key);
 			}
 			result = jedis.sadd(key, (String[]) value.toArray());
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setSet {} = {}", key, value);
@@ -433,7 +459,7 @@ public class JedisUtils {
 				set.add(toBytes(o));
 			}
 			result = jedis.sadd(getBytesKey(key), (byte[][]) set.toArray());
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setObjectSet {} = {}", key, value);
@@ -560,7 +586,7 @@ public class JedisUtils {
 				jedis.del(key);
 			}
 			result = jedis.hmset(key, value);
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setMap {} = {}", key, value);
@@ -593,7 +619,7 @@ public class JedisUtils {
 				map.put(getBytesKey(e.getKey()), toBytes(e.getValue()));
 			}
 			result = jedis.hmset(getBytesKey(key), (Map<byte[], byte[]>) map);
-			if (cacheSeconds != 0) {
+			if (cacheSeconds > 0) {
 				jedis.expire(key, cacheSeconds);
 			}
 			logger.debug("setObjectMap {} = {}", key, value);

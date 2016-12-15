@@ -98,6 +98,7 @@ public class CassandraTest {
         PagingState pageState = info.getPagingState();
         System.err.println(pageState.toString());
         System.out.println(Arrays.toString(pageState.toBytes()));
+        System.out.println(pageState.toBytes());
         for (Row row : rs) {
             System.out.println(rs.getAvailableWithoutFetching() + ":" + rs.isFullyFetched());
             if (rs.getAvailableWithoutFetching() == pageSize && !rs.isFullyFetched())

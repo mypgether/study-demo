@@ -118,6 +118,20 @@ public class JedisServiceImpl implements JedisService {
     }
 
     @Override
+    public boolean delete(String key) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            return JedisClusterUtils.del(key);
+        } else {
+            long result = JedisUtils.del(key);
+            if (result == 1) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
     public Long hset(String key, String filed, String value, Long expires) {
         key = buildKey(key);
         if (this.isCluster) {
@@ -137,6 +151,68 @@ public class JedisServiceImpl implements JedisService {
         } else {
             return JedisUtils.hGet(key, filed);
         }
+    }
+
+    @Override
+    public String get(String key) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            return JedisClusterUtils.get(key, null);
+        } else {
+            return JedisUtils.get(key);
+        }
+    }
+
+    @Override
+    public Object getObject(String key) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            return JedisClusterUtils.getObject(key);
+        } else {
+            return JedisUtils.getObject(key);
+        }
+    }
+
+    @Override
+    public boolean set(String key, String value, int cacheSeconds) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            if (cacheSeconds > 0) {
+                return JedisClusterUtils.set(key, value, cacheSeconds);
+            } else {
+                return JedisClusterUtils.set(key, value);
+            }
+        } else {
+            String result = JedisUtils.set(key, value, cacheSeconds);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean setObject(String key, Object value, int cacheSeconds) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            return JedisClusterUtils.setObject(key, value, cacheSeconds);
+        } else {
+            String result = JedisUtils.setObject(key, value, cacheSeconds);
+            if (StringUtils.equalsIgnoreCase(result, "OK")) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public boolean setnx(String key, String value, int cacheSeconds) {
+        key = buildKey(key);
+        if (this.isCluster) {
+            return JedisClusterUtils.setnx(key, value, cacheSeconds);
+        } else {
+            Long result = JedisUtils.setnx(key, value, cacheSeconds);
+            if (result == 1)
+                return true;
+        }
+        return false;
     }
 
     private String buildKey(String key) {

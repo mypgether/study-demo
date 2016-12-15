@@ -57,4 +57,19 @@ public class UserTest {
         // 查数据库，应该有3个用户
         //Assert.assertEquals(3, userService.list().size());
     }
+
+    @Test
+    public void testGetUser() {
+        for (int i = 0; i < 1000; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    long start = System.currentTimeMillis();
+                    userService.getById(1481712094804L);
+                    System.out.println("cost times :" + (System.currentTimeMillis() - start));
+                    //System.out.println(JsonUtils.toJsonStrWithNull(userService.getById(1481712094804L)));
+                }
+            }).start();
+        }
+    }
 }
