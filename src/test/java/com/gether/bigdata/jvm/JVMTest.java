@@ -1,5 +1,6 @@
-package com.gether.bigdata;
+package com.gether.bigdata.jvm;
 
+import com.gether.bigdata.Balloon;
 import com.gether.bigdata.util.JvmAddressUtils;
 import org.junit.Test;
 import sun.misc.Unsafe;
@@ -23,6 +24,9 @@ public class JVMTest {
 
         foo(blue);
         System.out.println("blue color=" + blue.getColor());
+
+        System.out.println(System.nanoTime());
+        System.out.println(System.currentTimeMillis());
 
     }
 

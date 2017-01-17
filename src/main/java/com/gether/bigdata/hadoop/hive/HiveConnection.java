@@ -19,9 +19,14 @@ public class HiveConnection {
     private String url = "jdbc:hive2://10.211.55.6:10000/default";
     private String username = "";
     private String password = "";
+    private boolean init;
 
     private Statement statement = null;
     private Connection connection = null;
+
+    public void setInit(boolean init) {
+        this.init = init;
+    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -36,18 +41,20 @@ public class HiveConnection {
     }
 
     public void init() throws SQLException, ClassNotFoundException {
-        log.info("hive init start...");
-        try {
-            Class.forName(driverName);
-            connection = DriverManager.getConnection(
-                    this.url, this.username, this.password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException e) {
-            log.error(driverName + " not found!", e);
-            //System.exit(1);
-        } catch (SQLException e) {
-            log.error("Connection error!", e);
-            //System.exit(1);
+        if (init) {
+            log.info("hive init start...");
+            try {
+                Class.forName(driverName);
+                connection = DriverManager.getConnection(
+                        this.url, this.username, this.password);
+                statement = connection.createStatement();
+            } catch (ClassNotFoundException e) {
+                log.error(driverName + " not found!", e);
+                //System.exit(1);
+            } catch (SQLException e) {
+                log.error("Connection error!", e);
+                //System.exit(1);
+            }
         }
     }
 

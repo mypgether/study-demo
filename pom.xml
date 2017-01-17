@@ -56,9 +56,17 @@
 
         <netflix.servo.version>0.7.9</netflix.servo.version>
         <netflix.archaius.version>0.6.6</netflix.archaius.version>
+
+        <idcenter.version>2.2.2</idcenter.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.sohu</groupId>
+            <artifactId>idcenter</artifactId>
+            <version>${idcenter.version}</version>
+        </dependency>
+
         <!-- netflix -->
         <dependency>
             <groupId>com.netflix.servo</groupId>

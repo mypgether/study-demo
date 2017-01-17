@@ -37,20 +37,23 @@ public class HbaseConnection {
     private String master;
     // session超时时间
     private String sessionTimeout;
+    private boolean init;
 
     public void init() {
-        Configuration conf = HBaseConfiguration.create();
-        String[] zkHostPort = this.zkQuorum.split(":");
-        conf.set("hbase.master", this.master);
-        conf.set("hbase.zookeeper.quorum", zkHostPort[0]);
-        conf.set("hbase.zookeeper.property.clientPort", zkHostPort[1]);
-        conf.set("zookeeper.session.timeout", this.sessionTimeout);
-        try {
-            connection = ConnectionFactory.createConnection(conf);
-        } catch (IOException e) {
-            log.error("init hbase error", e);
+        if (init) {
+            Configuration conf = HBaseConfiguration.create();
+            String[] zkHostPort = this.zkQuorum.split(":");
+            conf.set("hbase.master", this.master);
+            conf.set("hbase.zookeeper.quorum", zkHostPort[0]);
+            conf.set("hbase.zookeeper.property.clientPort", zkHostPort[1]);
+            conf.set("zookeeper.session.timeout", this.sessionTimeout);
+            try {
+                connection = ConnectionFactory.createConnection(conf);
+            } catch (IOException e) {
+                log.error("init hbase error", e);
+            }
+            log.info("hbase连接成功！");
         }
-        log.info("hbase连接成功！");
     }
 
     public void destroy() {
@@ -60,6 +63,10 @@ public class HbaseConnection {
             }
         } catch (IOException e) {
         }
+    }
+
+    public void setInit(boolean init) {
+        this.init = init;
     }
 
     /**

@@ -24,7 +24,7 @@ public class UserTest {
     @Before
     public void setUp() {
         // 准备，清空user表
-        //userService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
@@ -38,10 +38,10 @@ public class UserTest {
         //if (true) {
         //    throw new Exception("呀呀出错了");
         //}
-        userService.add(id2, "name2", 2);
-        userService.add(System.currentTimeMillis() + 2, "name3", 3);
-        userService.add(System.currentTimeMillis() + 3, "name4", 4);
-        userService.add(System.currentTimeMillis() + 4, "name5", 5);
+        userService.add(id2, "name92", 2);
+        userService.add(System.currentTimeMillis() + 2, "name93", 3);
+        userService.add(System.currentTimeMillis() + 3, "name94", 4);
+        userService.add(System.currentTimeMillis() + 4, "name95", 5);
         // 查数据库，应该有5个用户
         //Assert.assertEquals(5, userSerivce.list().size());
 
