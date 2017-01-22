@@ -1,10 +1,8 @@
 package com.gether.bigdata;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,17 +15,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@EnableAutoConfiguration
-@ComponentScan
-@Configuration
 @EnableTransactionManagement
-//@EnableConfigurationProperties
+@EnableConfigurationProperties
 @ImportResource("classpath:META-INF/resources/applicationContext.xml")
 public class Application {
 
     // 其中 dataSource 框架会自动为我们注入
     //@Bean
-    //public PlatformTransactionManager txManager(DataSource dataSource) {
+    //public PlatformTransactionManager transactionManager(DataSource dataSource) {
     //    return new DataSourceTransactionManager(dataSource);
     //}
 

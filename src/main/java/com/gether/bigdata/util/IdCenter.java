@@ -35,7 +35,7 @@ public abstract class IdCenter {
 	
 	protected static long getWorkerId(){
 		 String workerId = System.getProperty("workerId");
-		 long workerIdLong = r.nextInt(1023);
+		 long workerIdLong = r.nextInt(32);
 		 if(StringUtils.isNotBlank(workerId)){
 			 workerIdLong = Long.valueOf(workerId);
 		 }

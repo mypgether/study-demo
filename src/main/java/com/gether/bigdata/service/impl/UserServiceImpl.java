@@ -1,18 +1,17 @@
-package com.gether.bigdata.service;
+package com.gether.bigdata.service.impl;
 
 import com.gether.bigdata.dao.mapper.UserMapper;
 import com.gether.bigdata.domain.user.User;
 import com.gether.bigdata.redis.JedisService;
+import com.gether.bigdata.service.UserService;
+import com.gether.bigdata.util.IdCenterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -20,7 +19,6 @@ import java.util.List;
  * @date: 16/10/22
  */
 @Service("userService")
-@Transactional
 public class UserServiceImpl implements  UserService {
 
     @Autowired
@@ -36,17 +34,26 @@ public class UserServiceImpl implements  UserService {
 
     public static int i = 0;
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public void add(Long id, String name, Integer age) {
         if (jdbcMode) {
             jdbcTemplate.update("insert into T_USER(id,NAME, AGE) values(?, ?, ?)", id, name, age);
         } else {
             userMapper.insert(id, name, age);
             i = i + 1;
-            //if (i == 3) {
-            //    throw new RuntimeException("呀呀出错了");
-            //}
+            if (i == 1) {
+                userService.add(IdCenterUtils.getId(), "name2", 2);
+                userService.add(IdCenterUtils.getId(), "name3", 3);
+                userService.add(IdCenterUtils.getId(), "name4", 4);
+                userService.add(IdCenterUtils.getId(), "name5", 5);
+            }
+
+            if (i == 3) {
+                throw new RuntimeException("error");
+            }
         }
     }
 
@@ -61,7 +68,9 @@ public class UserServiceImpl implements  UserService {
                 if (lock) {
                     System.err.println("get lock ...");
                     result = getFromBD(id);
-                    jedisService.setObject(String.valueOf(id), result, 100);
+                    if(result!=null) {
+                        jedisService.setObject(String.valueOf(id), result, 100);
+                    }
                 } else {
                     try {
                         Thread.sleep(50);
@@ -112,7 +121,6 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void update(Long id, String name, Integer age) {
         if (jdbcMode) {
             jdbcTemplate.update("update T_USER set name=?,age=? where id=?", name, age, id);
@@ -122,7 +130,6 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void delete(Long id) {
         if (jdbcMode) {
             jdbcTemplate.update("delete from T_USER where id = ?", id);
@@ -132,20 +139,11 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
     public void deleteAll() {
         if (jdbcMode) {
             jdbcTemplate.update("delete from T_USER");
         } else {
             userMapper.deleteAll();
-        }
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
-    public void insertFlow() throws ParseException {
-        if (jdbcMode) {
-        } else {
         }
     }
 }

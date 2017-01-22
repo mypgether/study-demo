@@ -2,7 +2,6 @@ package com.gether.bigdata.service;
 
 import com.gether.bigdata.domain.user.User;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -22,6 +21,4 @@ public interface UserService {
     public void delete(Long id);
 
     public void deleteAll();
-
-    public void insertFlow() throws ParseException;
 }

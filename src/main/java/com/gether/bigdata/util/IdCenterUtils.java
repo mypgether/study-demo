@@ -13,7 +13,7 @@ public class IdCenterUtils extends IdCenter {
 	private IdCenterUtils() {
 		/*final long idepo = System.currentTimeMillis() - 3600 * 1000L;*/
 		idWorker = new IdWorker(getWorkerId(), getDatacenterId(), 0 /*, idepo */);
-		log.info("workerId: {}", idWorker.getWorkerId());
+		//log.info("workerId: {}", idWorker.getWorkerId());
 	}
 
 	private static IdCenterUtils instance = new IdCenterUtils();
