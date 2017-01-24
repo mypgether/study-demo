@@ -1,0 +1,55 @@
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<classPathEntry location="/Users/myp/Documents/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar" />
+
+	<context id="mysql" targetRuntime="MyBatis3">
+
+		<property name="autoDelimitKeywords" value="true"/>
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+		<!--<plugin type="com.closeli.iot.business.core.dal.MySQLLimitPlugin"/>-->
+		<!--<plugin type="com.closeli.iot.business.core.dal.SplitTableExtend"/>-->
+
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/springboot" userId="root" password="1234" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- generate Model -->
+		<javaModelGenerator targetPackage="com.gether.bigdata.dao.dataobject" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- generate xml -->
+		<sqlMapGenerator targetPackage="src/main/resources/META-INF/sqlmap" targetProject=".">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- generate Client -->
+
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.gether.bigdata.dao.mapper" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table schema="" tableName="o_device" domainObjectName="ODevice">
+		</table>
+		<!--<table schema="" tableName="iot_profile" domainObjectName="IotProfile"  >-->
+		<!--<columnOverride column="schema" jdbcType="VARCHAR"></columnOverride>-->
+		<!--<columnOverride column="profile" jdbcType="VARCHAR"></columnOverride>-->
+		<!--</table>-->
+		<!--<table schema="" tableName="iot_productkey" domainObjectName="IotProductkey"  >-->
+		<!--<columnOverride column="streambitrate" jdbcType="VARCHAR"></columnOverride>-->
+		<!--</table>-->
+	</context>
+</generatorConfiguration>

@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@ImportResource("classpath:META-INF/resources/applicationContext.xml")
+@ImportResource("classpath:META-INF/spring/applicationContext.xml")
 public class Application {
 
     // 其中 dataSource 框架会自动为我们注入

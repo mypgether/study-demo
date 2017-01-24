@@ -70,7 +70,6 @@ public class WaterMarkMain {
 					System.out.println("Thrify client result =: " + result);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				try {
@@ -78,8 +77,6 @@ public class WaterMarkMain {
 						pool.returnObject(protocol);
 					}
 				} catch (Exception e) {
-					//System.out.println(protocol.toString());
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -140,7 +137,6 @@ public class WaterMarkMain {
 						pool.returnObject(protocol);
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -204,7 +200,6 @@ public class WaterMarkMain {
 						pool.returnObject(transport);
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -268,7 +263,6 @@ public class WaterMarkMain {
 						pool.returnObject(client);
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
