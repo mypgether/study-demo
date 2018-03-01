@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<!--<springProfile name="dev">-->
+
+	<property name="LOG_FILE" value="/usr/local/tomcat/logs/bigdata" />
+
+	<property name="MAX_FILESIZE" value="20" />
+	<property name="MAX_HISTORY_DAY" value="15" />
+
+	<property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([${bigdata:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]){yellow} %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
+
+	<appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<!-- appender -->
+	<appender name="DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/bigdata.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/bigdata.log.%d{yyyy-MM-dd}.%i.bz2</fileNamePattern>
+			<maxHistory>${MAX_HISTORY_DAY}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILESIZE}mb</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<!-- appender -->
+	<appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/bigdata.error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/bigdata.error.log.%d{yyyy-MM-dd}.%i.bz2</fileNamePattern>
+			<maxHistory>${MAX_HISTORY_DAY}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILESIZE}mb</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+
+	<appender name="MQ-ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/mq/mqhander.error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/mq/mqhander.error.log.%d{yyyy-MM-dd}.%i.bz2</fileNamePattern>
+			<maxHistory>${MAX_HISTORY_DAY}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILESIZE}mb</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="Abstract-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}/requestLog.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/request/requestLog_%d{yyyyMMddHH}_%i.log
+			</fileNamePattern>
+			<maxHistory>${MAX_HISTORY_DAY}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILESIZE}mb</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<Pattern>%d{ddHHmmss}\region\t%msg%n</Pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!--<appender name="CONSOLE-LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+	<!--<file>${LOG_FILE}/bigdata.json</file>-->
+	<!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+	<!--<fileNamePattern>${LOG_FILE}.bigdata.json.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>-->
+	<!--<maxHistory>${MAX_HISTORY_DAY}</maxHistory>-->
+	<!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+	<!--<maxFileSize>${MAX_FILESIZE}mb</maxFileSize>-->
+	<!--</timeBasedFileNamingAndTriggeringPolicy>-->
+	<!--</rollingPolicy>-->
+	<!--<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+	<!--<providers>-->
+	<!--<timestamp>-->
+	<!--<timeZone>UTC</timeZone>-->
+	<!--</timestamp>-->
+	<!--<pattern>-->
+	<!--<pattern> { "severity": "%level", "service": "${springAppName:-}", "trace": "%X{X-B3-TraceId:-}", "span": "%X{X-B3-SpanId:-}", "exportable": "%X{X-Span-Export:-}", "pid": "${PID:-}", "thread": "%thread", "class": "%logger{40}", "rest": "%msg"} </pattern>-->
+	<!--</pattern>-->
+	<!--</providers>-->
+	<!--</encoder>-->
+	<!--</appender>-->
+
+	<!-- use AsyncAppender for lower latencies -->
+	<appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="CONSOLE-APPENDER" />
+	</appender>
+
+	<!--
+    Turn on slow query logging by setting this logger to DEBUG;
+    set level to TRACE to also log query parameters
+    -->
+	<logger name="com.datastax.driver.core.QueryLogger.SLOW" level="TRACE" additivity="false" >
+		<appender-ref ref="async" />
+	</logger>
+
+	<!--<logger name="com.datastax.driver.core.ClockFactory" level="INFO" additivity="false" >-->
+	<!--<appender-ref ref="async" />-->
+	<!--</logger>-->
+
+	<logger name="com.datastax.driver.core.QueryLogger.ERROR" level="TRACE" additivity="false" >
+		<appender-ref ref="async" />
+	</logger>
+
+	<logger name="org.springframework.boot" level="INFO">
+		<appender-ref ref="async" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="async" />
+	</root>
+</configuration>

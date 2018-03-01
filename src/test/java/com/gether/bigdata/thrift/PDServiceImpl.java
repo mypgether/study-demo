@@ -11,7 +11,6 @@ package com.gether.bigdata.thrift;//package com.gether.bigdata;
 //
 ///**
 // * pdService 模拟实现
-// * Created by qmd2750 on 2016/11/28.
 // */
 //public class PDServiceImpl implements PDService.Iface {
 //

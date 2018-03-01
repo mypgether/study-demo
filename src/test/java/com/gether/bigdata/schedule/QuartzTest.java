@@ -1,13 +1,11 @@
 package com.gether.bigdata.schedule;
 
-import com.gether.bigdata.Application;
 import com.gether.bigdata.schedule.quartz.TrunoffJob;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -21,7 +19,6 @@ import java.util.TimeZone;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@SpringApplicationConfiguration(Application.class)
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -40,7 +37,7 @@ public class QuartzTest {
         TriggerKey trikey = new TriggerKey("tri-name1", "JobDemoGroup");
 
         JobDataMap datamap = new JobDataMap();
-        datamap.put("device", "19289");
+        datamap.put("d1", "19289");
         JobDetail jobDetail = JobBuilder
                 .newJob(TrunoffJob.class)
                 //.withIdentity(jobKey).usingJobData(null).build();

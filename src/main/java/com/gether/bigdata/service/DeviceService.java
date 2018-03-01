@@ -1,6 +1,6 @@
 package com.gether.bigdata.service;
 
-import com.gether.bigdata.dao.dataobject.ODevice;
+import com.gether.bigdata.dao.dataobject.Device;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ public interface DeviceService {
 
     public void addDevice(boolean rollback);
 
-    public List<ODevice> getDeviceList();
+    public List<Device> getDeviceList();
 
 }

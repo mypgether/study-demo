@@ -1,13 +1,12 @@
 package com.gether.bigdata.service.impl;
 
-import com.gether.bigdata.dao.dataobject.ODevice;
-import com.gether.bigdata.dao.dataobject.ODeviceExample;
-import com.gether.bigdata.dao.mapper.ODeviceMapper;
+import com.gether.bigdata.dao.dataobject.Device;
+import com.gether.bigdata.dao.dataobject.DeviceExample;
+import com.gether.bigdata.dao.mapper.DeviceMapper;
 import com.gether.bigdata.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,31 +16,28 @@ import java.util.List;
 public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
-    private ODeviceMapper oDeviceMapper;
+    private DeviceMapper deviceMapper;
 
     @Override
     public void addDevice(boolean rollback) {
-        ODevice record = new ODevice();
-        record.setDeviceid("deviceid1");
-        record.setStatus(0);
-        record.setRegistertime(new Date());
-        record.setDevicename("devicename1");
-        record.setModelid("modelid");
-        record.setCloudid(1);
+        Device record = new Device();
+        record.setDeviceId("deviceid1");
+        record.setName("name1");
         record.setUid(1000L);
-        oDeviceMapper.insertSelective(record);
+        record.setComment("comment");
+        deviceMapper.insertSelective(record);
 
-        record.setDeviceid("deviceid2");
-        record.setDevicename("devicename2");
-        oDeviceMapper.insertSelective(record);
+        record.setDeviceId("deviceid2");
+        record.setName("name");
+        deviceMapper.insertSelective(record);
         if (rollback) {
             throw new RuntimeException("need rollback");
         }
     }
 
     @Override
-    public List<ODevice> getDeviceList() {
-        ODeviceExample example = new ODeviceExample();
-        return oDeviceMapper.selectByExample(example);
+    public List<Device> getDeviceList() {
+        DeviceExample example = new DeviceExample();
+        return deviceMapper.selectByExample(example);
     }
 }

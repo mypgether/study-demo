@@ -11,7 +11,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaterMarkMain {
-	public static final String SERVER_IP = "114.215.133.86";
+	public static final String SERVER_IP = "localhost";
 	public static final int SERVER_PORT = 9098;
 	public static final int TIMEOUT = 30000;
 	public static final int HASH_LENGTH = 32;
@@ -42,7 +41,7 @@ public class WaterMarkMain {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTestOnReturn(true);
 		ObjectPool<TProtocol> pool = new GenericObjectPool<>(
-				new TProtocolFactory("114.215.133.86", 9097, true, 3000), poolConfig);
+				new TProtocolFactory(SERVER_IP, SERVER_PORT, true, TIMEOUT), poolConfig);
 		Watermark.Client client;
 		TProtocol protocol = null;
 		long startTime = System.currentTimeMillis();
@@ -62,7 +61,7 @@ public class WaterMarkMain {
 				for (int i = 0; i < name.length(); i++) {
 					long startTime1 = System.currentTimeMillis();
 					int fontSize = 16;
-					String result = client.pdProcess("/home/dev/fzl9570/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(UnicodeUtils.str2UnicodeInt(name.charAt(i) + "") + ""));
+					String result = client.pdProcess("/home/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(UnicodeUtils.str2UnicodeInt(name.charAt(i) + "") + ""));
 					resultList.add(result);
 					System.out.println("cost1:" + (System.currentTimeMillis() - startTime1));
 					print(result, fontSize);
@@ -96,7 +95,7 @@ public class WaterMarkMain {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTestOnReturn(true);
 		ObjectPool<TProtocol> pool = new GenericObjectPool<>(
-				new TProtocolFactory("114.215.133.86", 9098, true, 3000), poolConfig);
+				new TProtocolFactory(SERVER_IP, SERVER_PORT, true, TIMEOUT), poolConfig);
 		Watermark.Client client;
 		TProtocol protocol = null;
 		for (int j = 0; j <= 10000; j++) {
@@ -115,7 +114,7 @@ public class WaterMarkMain {
 					long startTime1 = System.currentTimeMillis();
 					int fontSize = 1032;
 					String unicode = UnicodeUtils.str2UnicodeInt(name.charAt(i) + "") + "";
-					String result = client.pdProcess("/home/dev/fzl9570/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
+					String result = client.pdProcess("/home/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
 					resultList.add(result);
 					System.out.println("cost1:" + (System.currentTimeMillis() - startTime1));
 					//System.out.println(result.getBytes().length);
@@ -156,7 +155,7 @@ public class WaterMarkMain {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTestOnReturn(true);
 		ObjectPool<TTransport> pool = new GenericObjectPool<>(
-				new TTransportFactory("114.215.133.86", 9098, true, 3000), poolConfig);
+				new TTransportFactory(SERVER_IP, SERVER_PORT, true, TIMEOUT), poolConfig);
 		Watermark.Client client;
 		TTransport transport = null;
 		for (int j = 0; j <= 1000; j++) {
@@ -178,7 +177,7 @@ public class WaterMarkMain {
 					long startTime1 = System.currentTimeMillis();
 					int fontSize = 32;
 					String unicode = UnicodeUtils.str2UnicodeInt(name.charAt(i) + "") + "";
-					String result = client.pdProcess("/home/dev/fzl9570/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
+					String result = client.pdProcess("/home/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
 					resultList.add(result);
 					//System.out.println("cost1:" + (System.currentTimeMillis() - startTime1));
 					//System.out.println(result.getBytes().length);
@@ -219,7 +218,7 @@ public class WaterMarkMain {
 		poolConfig.setTestOnBorrow(true);
 		poolConfig.setTestOnReturn(true);
 		ObjectPool<Watermark.Client> pool = new GenericObjectPool<>(
-				new TWatermarkClientFactory("114.215.133.86", 9098, true, 3000), poolConfig);
+				new TWatermarkClientFactory(SERVER_IP, SERVER_PORT, true, TIMEOUT), poolConfig);
 		Watermark.Client client = null;
 		for (int j = 0; j <= 1000; j++) {
 
@@ -237,7 +236,7 @@ public class WaterMarkMain {
 					long startTime1 = System.currentTimeMillis();
 					int fontSize = 32;
 					String unicode = UnicodeUtils.str2UnicodeInt(name.charAt(i) + "") + "";
-					String result = client.pdProcess("/home/dev/fzl9570/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
+					String result = client.pdProcess("/home/SourceHanSansK-Regular.ttf", fontSize, Long.valueOf(unicode));
 					resultList.add(result);
 					//System.out.println("cost1:" + (System.currentTimeMillis() - startTime1));
 					//System.out.println(result.getBytes().length);
@@ -288,7 +287,7 @@ public class WaterMarkMain {
 	@Test
 	public void getWatermark() throws IOException {
 		FileOutputStream file = new FileOutputStream("/Users/myp/file.out", false);
-		InputStream inputStream = loadFileFromURL("http://esd.h.reservehemu.com/lecam/service/watermark/get");
+		InputStream inputStream = loadFileFromURL("");
 		OutputStream os = new FileOutputStream("/Users/myp/file.out", false);
 		int bytesRead = 0;
 		byte[] buffer = new byte[8192];
@@ -313,9 +312,6 @@ public class WaterMarkMain {
 		HttpPost httppost = new HttpPost(url);
 		try {
 			List<NameValuePair> formParams = new ArrayList<NameValuePair>();
-			formParams.add(new BasicNameValuePair("deviceId", "xxxxS_28f3667d5868"));
-			formParams.add(new BasicNameValuePair("watermarkDes", "[{\"fontSize\":\"16\"},{\"fontSize\":\"32\"}]"));
-			formParams.add(new BasicNameValuePair("token", "cf381314b66e44688330f4967da3bc5c"));
 			UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(formParams, "UTF-8");
 			httppost.setEntity(uefEntity);
 			// 调用HttpClient对象的execute()方法，参数是刚才创建的 HttpGet或HttpPost对象

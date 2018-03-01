@@ -66,7 +66,7 @@
 //	}
 //
 //	/*public static void main (String[] args) {
-//		DistributedLockRedis.init("192.168.30.246:6379","");
+//		DistributedLockRedis.init("localhost:6379","");
 //
 //
 //	    long start = System.currentTimeMillis();

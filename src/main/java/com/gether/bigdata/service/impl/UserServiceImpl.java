@@ -1,10 +1,10 @@
 package com.gether.bigdata.service.impl;
 
 import com.gether.bigdata.dao.mapper.UserMapper;
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
+import com.gether.bigdata.idcenter.IdCenterUtils;
 import com.gether.bigdata.redis.JedisService;
 import com.gether.bigdata.service.UserService;
-import com.gether.bigdata.util.IdCenterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -49,10 +49,6 @@ public class UserServiceImpl implements  UserService {
                 userService.add(IdCenterUtils.getId(), "name3", 3);
                 userService.add(IdCenterUtils.getId(), "name4", 4);
                 userService.add(IdCenterUtils.getId(), "name5", 5);
-            }
-
-            if (i == 3) {
-                throw new RuntimeException("error");
             }
         }
     }

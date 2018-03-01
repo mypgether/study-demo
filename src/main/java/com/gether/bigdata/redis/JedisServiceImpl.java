@@ -33,7 +33,7 @@ public class JedisServiceImpl implements JedisService {
     private boolean isCluster = false;
     private String password;
 
-    private String keyPrefix = "esdserver";
+    private String keyPrefix = "prefix";
 
 
     @Override

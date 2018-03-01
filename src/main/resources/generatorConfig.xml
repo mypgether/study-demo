@@ -16,8 +16,8 @@
 		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-		<!--<plugin type="com.closeli.iot.business.core.dal.MySQLLimitPlugin"/>-->
-		<!--<plugin type="com.closeli.iot.business.core.dal.SplitTableExtend"/>-->
+		<!--<plugin type="com.gether.bigdata.mybatis.plugin.MySQLLimitPlugin"/>-->
+		<!--<plugin type="com.gether.bigdata.mybatis.plugin.InsertSelectKeyPlugin"/>-->
 
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/springboot" userId="root" password="1234" />
@@ -42,14 +42,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table schema="" tableName="o_device" domainObjectName="ODevice">
+		<table schema="" tableName="device" domainObjectName="Device">
 		</table>
-		<!--<table schema="" tableName="iot_profile" domainObjectName="IotProfile"  >-->
-		<!--<columnOverride column="schema" jdbcType="VARCHAR"></columnOverride>-->
-		<!--<columnOverride column="profile" jdbcType="VARCHAR"></columnOverride>-->
-		<!--</table>-->
-		<!--<table schema="" tableName="iot_productkey" domainObjectName="IotProductkey"  >-->
-		<!--<columnOverride column="streambitrate" jdbcType="VARCHAR"></columnOverride>-->
-		<!--</table>-->
 	</context>
 </generatorConfiguration>

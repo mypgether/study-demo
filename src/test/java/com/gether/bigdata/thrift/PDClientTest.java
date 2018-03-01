@@ -29,7 +29,6 @@ package com.gether.bigdata.thrift;//package com.gether.bigdata;
 //
 ///**
 // *
-// * Created by qmd2750 on 2016/11/28.
 // */
 //
 //public class PDClientTest {

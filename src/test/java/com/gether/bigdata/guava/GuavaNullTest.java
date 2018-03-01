@@ -21,7 +21,10 @@ public class GuavaNullTest {
         System.out.println(Optional.absent().isPresent());
         System.out.println(Optional.fromNullable(null));
         System.out.println(Optional.absent().or(1));
-        System.out.println(Optional.of(null));
+        System.out.println(Optional.absent());
+
+        Optional<String> str = Optional.of("");
+        System.out.println("str.get:" + str.get());
     }
 
     @Test

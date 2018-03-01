@@ -1,6 +1,6 @@
 package com.gether.bigdata.device;
 
-import com.gether.bigdata.dao.dataobject.ODevice;
+import com.gether.bigdata.dao.dataobject.Device;
 import com.gether.bigdata.service.DeviceService;
 import com.gether.bigdata.web.view.DeviceController;
 import com.google.common.collect.Lists;
@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -52,11 +51,10 @@ public class DeviceMockTest {
 
     @Test
     public void getDeviceList() throws Exception {
-        List<ODevice> devices = Lists.newArrayList();
-        ODevice d = new ODevice();
-        d.setRegistertime(new Date());
-        d.setDevicename("devicename1");
-        d.setDeviceid("deviceid1");
+        List<Device> devices = Lists.newArrayList();
+        Device d = new Device();
+        d.setName("name1");
+        d.setDeviceId("deviceid1");
         devices.add(d);
         when(deviceController.devicelist()).thenReturn(devices);
 

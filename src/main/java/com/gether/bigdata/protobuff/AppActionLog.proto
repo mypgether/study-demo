@@ -1,0 +1,32 @@
+package com.gether.bigdata.protobuff;
+
+message AppLog {
+    enum NETTYPE {WIFI = 1; G2 = 2; G3 = 3; G4 = 4; G5 = 5; OTHER = 6; };
+
+    required string requestid = 1;
+    required string deviceno = 2;
+    repeated AppAction appactions = 3;
+    optional NETTYPE network = 4;
+    optional DeviceInfo deviceinfo = 5;
+    optional uint64 time = 6;
+}
+
+message AppAction {
+    enum ACTIONTYPE {LIVE = 1; PLAYBACK = 2; APP_OPEN = 3; MAKE_CLIP = 4; LOGIN = 5; QUICK_LOGIN = 6; }
+
+    required ACTIONTYPE actiontype = 1;
+    repeated MapFieldEntry properties = 2;
+}
+
+message MapFieldEntry {
+    required string key = 1;
+    required string value = 2;
+}
+
+message DeviceInfo {
+    optional string devicetype = 1;
+    optional string version = 2;
+    optional string imei = 3;
+    optional string ostype = 4;
+    optional string osversion = 5;
+}

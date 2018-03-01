@@ -43,7 +43,7 @@ public class JedisTest {
     private boolean isCluster = false;
     private String password;
 
-    private String keyPrefix = "esdserver";
+    private String keyPrefix = "prefix";
 
     @Before
     public void before() {

@@ -1,6 +1,6 @@
 package com.gether.bigdata.guava;
 
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

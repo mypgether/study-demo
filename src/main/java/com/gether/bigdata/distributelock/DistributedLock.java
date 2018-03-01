@@ -18,7 +18,7 @@ public class DistributedLock extends IDistributedLock {
 
 
 	public static long value = 1;
-	public static String servers = "192.168.30.107:2181";
+	public static String servers = "localhost:2181";
 
 	private static CuratorFramework curator = null;
 	private static zkListener listener = null;

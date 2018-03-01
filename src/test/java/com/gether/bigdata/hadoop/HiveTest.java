@@ -27,7 +27,7 @@ public class HiveTest {
         }
 
         Connection con = DriverManager.getConnection(
-                "jdbc:hive2://10.211.55.6:10000/default", "", "");
+                "jdbc:hive2://localhost:10000/default", "", "");
         Statement stmt = con.createStatement();
         // show tables
         String sql = "show tables";
@@ -70,12 +70,12 @@ public class HiveTest {
         //System.err.println(exeTrue);
 
 
-        //String sql = "CREATE TABLE IF NOT EXISTS " + "flow_statistic_11" + " (appNO int,serverNo int,userNo string,deviceNo string,terminalNo string,terminalType int,dataSize int,liveTime double,flowType int,netType int,ip string,areaNo bigint,carrier string,version string,deviceMsg string, time bigint,remarks string) ROW FORMAT DELIMITED  FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n' STORED AS TEXTFILE";
+        //String sql = "CREATE TABLE IF NOT EXISTS " + "a" + " (appNO int,serverNo int,userNo string,deviceNo string,terminalNo string,terminalType int,dataSize int,liveTime double,flowType int,netType int,ip string,areaNo bigint,carrier string,version string,deviceMsg string, time bigint,remarks string) ROW FORMAT DELIMITED  FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n' STORED AS TEXTFILE";
         //stmt.execute(sql);
 
         //String tableName = "inner_table";
         ////sql = "LOAD DATA LOCAL INPATH '" + filePath + "' into table " + tableName;
-        //String sql = "LOAD DATA LOCAL INPATH '/usr/local/flowHive.log' overwrite into table flow_statistic_11";
+        //String sql = "LOAD DATA LOCAL INPATH '/usr/local/flowHive.log' overwrite into table a";
         //boolean exeTrue = stmt.execute(sql);
         //System.err.println(exeTrue);
     }

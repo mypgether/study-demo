@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 public class AesUtils {
   private static Logger log = LoggerFactory.getLogger(AesUtils.class);
 
-  private static final String IV_PARAM = "dda639ffb96d8724";
-  private static final String PASSWORD = "1290c17708b0351c";
+  private static final String IV_PARAM = "ooasadkc9291ujdm";
+  private static final String PASSWORD = "cnasio2183k12udk";
 
   /**
    * AES加密字符串

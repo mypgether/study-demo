@@ -1,6 +1,6 @@
 package com.gether.bigdata.service;
 
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
 
 import java.util.List;
 

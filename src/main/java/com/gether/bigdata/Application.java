@@ -1,5 +1,6 @@
 package com.gether.bigdata;
 
+import com.gether.bigdata.endpoint.EnableMetricsAEndpoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,16 +19,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @ImportResource("classpath:META-INF/spring/applicationContext.xml")
+@EnableMetricsAEndpoint
 public class Application {
-
-    // 其中 dataSource 框架会自动为我们注入
-    //@Bean
-    //public PlatformTransactionManager transactionManager(DataSource dataSource) {
-    //    return new DataSourceTransactionManager(dataSource);
-    //}
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        //new SpringApplicationBuilder(Application.class).web(true).run(args);
     }
 }

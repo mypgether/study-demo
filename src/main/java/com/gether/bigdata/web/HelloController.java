@@ -17,16 +17,11 @@ public class HelloController {
     @RequestMapping("/hello")
     @ResponseBody
     public String index() throws Exception {
-        return "Hello gether";
+        return "hello";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "login";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPost() {
         return "login";
     }
 }

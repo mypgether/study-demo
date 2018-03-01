@@ -5,6 +5,10 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 针对threadlocal会不会导致内存溢出的测试，其实线程结束后，threadlocal也就结束了。所以不会导致内存溢出。
+ * 但是如果线程卡死，sleep，那么就会导致内存一直增高
+ */
 public class JVMGCTest {
 
     public static void main(String[] args) throws Exception {

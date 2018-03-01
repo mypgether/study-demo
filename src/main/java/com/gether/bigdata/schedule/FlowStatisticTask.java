@@ -14,8 +14,14 @@ public class FlowStatisticTask {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 100)
     public void reportCurrentTime() {
+        long time = getNowTime();
+        log.info("time start is {}", time);
         log.info("The time is now {}", System.currentTimeMillis());
+    }
+
+    public long getNowTime() {
+        throw new RuntimeException("hehe");
     }
 }

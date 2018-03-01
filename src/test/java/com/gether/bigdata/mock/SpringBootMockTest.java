@@ -1,6 +1,6 @@
 package com.gether.bigdata.mock;
 
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
 import com.gether.bigdata.service.UserService;
 import com.gether.bigdata.web.view.UserController;
 import org.hamcrest.CoreMatchers;

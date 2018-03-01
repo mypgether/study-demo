@@ -1,0 +1,15 @@
+package com.gether.bigdata.protobuff;
+
+option java_package="com.gether.bigdata.protobuff";
+option java_outer_classname="UserProto";
+
+message User {
+    enum SEX {MALE=0;FEMALE = 1;};
+
+    required uint32 id =1 ;
+    required string name=2;
+    required SEX sex=3;
+    optional string remark=4;
+
+    repeated User friends = 5;
+}

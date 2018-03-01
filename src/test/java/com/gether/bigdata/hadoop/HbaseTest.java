@@ -1,11 +1,9 @@
 package com.gether.bigdata.hadoop;
 
-import com.gether.bigdata.Application;
 import com.gether.bigdata.hadoop.hbase.HbaseConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -14,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@SpringApplicationConfiguration(Application.class)
 public class HbaseTest {
 
 
@@ -23,7 +20,7 @@ public class HbaseTest {
 
     @Test
     public void hbaseTest() throws Exception {
-        hBase.createTable("flow_statistic_12", "appno",
+        hBase.createTable("a12", "appno",
                 "serverno",
                 "userno",
                 "deviceno",

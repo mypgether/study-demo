@@ -1,6 +1,6 @@
 package com.gether.bigdata.dao.mapper;
 
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

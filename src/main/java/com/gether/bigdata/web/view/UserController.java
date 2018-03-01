@@ -1,9 +1,9 @@
 package com.gether.bigdata.web.view;
 
-import com.gether.bigdata.domain.user.User;
+import com.gether.bigdata.dao.dataobject.User;
+import com.gether.bigdata.idcenter.IdCenterUtils;
 import com.gether.bigdata.service.UserService;
 import com.gether.bigdata.service.impl.UserServiceImpl;
-import com.gether.bigdata.util.IdCenterUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

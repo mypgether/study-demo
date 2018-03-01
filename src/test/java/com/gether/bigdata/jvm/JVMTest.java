@@ -1,6 +1,5 @@
 package com.gether.bigdata.jvm;
 
-import com.gether.bigdata.Balloon;
 import com.gether.bigdata.util.JvmAddressUtils;
 import org.junit.Test;
 import sun.misc.Unsafe;
@@ -83,5 +82,11 @@ public class JVMTest {
         bb.flip();
         CharBuffer cb = cs.decode(bb);
         return cb.array();
+    }
+
+    @Test
+    public void unsafeTest() throws NoSuchFieldException {
+        long valueOffset = unsafe.objectFieldOffset(Balloon.class.getDeclaredField("color"));
+        System.out.println(valueOffset);
     }
 }

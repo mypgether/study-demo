@@ -17,7 +17,6 @@ package com.gether.bigdata.thrift;//package com.gether.bigdata;
 //
 ///**
 // * 采用TThreadedSelectorServer方式
-// * Created by qmd2750 on 2016/11/28.
 // */
 //public class PDServerTest {
 //	public static final int PD_PORT = 9090;

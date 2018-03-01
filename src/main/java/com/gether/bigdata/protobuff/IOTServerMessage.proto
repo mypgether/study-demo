@@ -1,0 +1,71 @@
+package com.gether.research.protobuff;
+
+
+
+message IOTMessage {
+    enum MessageType { REQUEST = 1; NOTICE_SEND = 2; ADD_DEVICE = 3; ONLINE_NOTICE =4; ACK_NOTICE =5;SENSOR_LIST = 6; PING = 7; PONG = 8; }
+    required MessageType message_type = 1;
+    optional Request request = 2;
+    optional NoticeSend notice_send = 3;
+    optional AddDevice add_device = 4;
+    optional OnlineNotice online_notice = 5;
+    optional AckNotice ack_notice = 6;
+    optional SensorList sensor_list = 7;    
+    optional UDPPing ping = 8;
+    optional UDPPong pong = 9;
+    required string  device_id = 10; 
+    required uint64  time = 11;
+    required string  sign = 12;
+}
+
+message SensorInfo {
+    required string sensor_code = 1; 
+    required string sensor_type = 2; 
+    required uint32 battery = 3 [default = 0]; 
+    optional string version = 4;
+    optional string sensor_name = 5; 
+    optional string value = 6 ; 
+}
+
+message Request {
+    repeated SensorInfo  sensor_info =2;
+}
+
+message NoticeSend {
+    enum NoticeType { ADD = 1; REMOVE = 2; DELETE = 3; OPEN =8; CLOSE =9;}
+    required NoticeType notice_type = 1;
+    required string sensor_code = 2; 
+    required string sensor_type = 3;     
+}
+
+message AddDevice {
+    required string token = 1;
+    required SensorInfo  sensor_info =2;
+    optional string product_code = 3; 
+}
+
+message OnlineNotice {
+    enum OnlineType { UP = 1; DOWN =0;}
+    required OnlineType online_type = 1;
+    required SensorInfo  sensor_info =2;
+}
+
+message AckNotice {
+    enum AckType { ADD = 1; OPEN =2; DELETE =3; CLOSE =4; UP =5; DOWN = 6; REQUEST = 7; LIST = 8;}
+    enum AckStatus { SUCCESS = 1; FAIL =0; }    
+    required AckType ack_type = 1;
+    required SensorInfo  sensor_info =2;
+    required AckStatus status = 3;
+}
+
+message SensorList {
+    repeated SensorInfo  sensor_info =2;
+}
+
+message UDPPing {
+    required uint32 id = 1 [default = 0];
+}
+
+message UDPPong {
+    required uint32 id = 1 [default = 0];
+}

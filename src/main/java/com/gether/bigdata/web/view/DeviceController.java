@@ -1,6 +1,6 @@
 package com.gether.bigdata.web.view;
 
-import com.gether.bigdata.dao.dataobject.ODevice;
+import com.gether.bigdata.dao.dataobject.Device;
 import com.gether.bigdata.service.DeviceService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +28,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<ODevice> devicelist() {
+    public List<Device> devicelist() {
         return deviceService.getDeviceList();
     }
 }
