@@ -11,23 +11,23 @@ import java.util.Set;
 
 public class HibernateValidationTest extends BaseValidationTest {
 
-    //user:169399
-    //482430
-    @Test
-    public void test() {
-        long start = System.currentTimeMillis();
-        for (int j = 0; j < TIMES; j++) {
-            Set<ConstraintViolation<Object>> violations = validator.validate(validationObj);
-            if (!violations.isEmpty()) {
+  //user:169399
+  //482430
+  @Test
+  public void test() {
+    long start = System.currentTimeMillis();
+    for (int j = 0; j < TIMES; j++) {
+      Set<ConstraintViolation<Object>> violations = validator.validate(validationObj);
+      if (!violations.isEmpty()) {
 
-            }
-        }
-        System.out.println(System.currentTimeMillis() - start);
+      }
     }
+    System.out.println(System.currentTimeMillis() - start);
+  }
 
-    @Override
-    public Validator getValidator() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        return factory.getValidator();
-    }
+  @Override
+  public Validator getValidator() {
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    return factory.getValidator();
+  }
 }
