@@ -6,14 +6,14 @@ package com.gether.bigdata.jvm.producer;
 public class Consumer extends Thread {
 
 
-    com.gether.research.jvm.producer.ShareObjService shareObjService;
+  com.gether.research.jvm.producer.ShareObjService shareObjService;
 
-    public Consumer(com.gether.research.jvm.producer.ShareObjService shareObjService) {
-        this.shareObjService = shareObjService;
-    }
+  public Consumer(com.gether.research.jvm.producer.ShareObjService shareObjService) {
+    this.shareObjService = shareObjService;
+  }
 
-    @Override
-    public void run() {
-        shareObjService.consumer();
-    }
+  @Override
+  public void run() {
+    shareObjService.consumer();
+  }
 }

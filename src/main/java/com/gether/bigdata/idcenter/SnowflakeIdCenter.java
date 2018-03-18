@@ -4,6 +4,7 @@ package com.gether.bigdata.idcenter;
  * Created by myp on 2017/11/8.
  */
 public class SnowflakeIdCenter {
+
     //================================================Algorithm's Parameter=============================================
     // 系统开始时间截 (UTC 2017-06-28 00:00:00)
     private final long startTime = 1498608000000L;
@@ -48,15 +49,17 @@ public class SnowflakeIdCenter {
     /**
      * 构造函数
      *
-     * @param workerId     工作ID (0~31)
+     * @param workerId 工作ID (0~31)
      * @param dataCenterId 数据中心ID (0~31)
      */
     public SnowflakeIdCenter(long workerId, long dataCenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
-            throw new IllegalArgumentException(String.format("Worker Id can't be greater than %d or less than 0", maxWorkerId));
+            throw new IllegalArgumentException(
+                String.format("Worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
         if (dataCenterId > maxDataCenterId || dataCenterId < 0) {
-            throw new IllegalArgumentException(String.format("DataCenter Id can't be greater than %d or less than 0", maxDataCenterId));
+            throw new IllegalArgumentException(String
+                .format("DataCenter Id can't be greater than %d or less than 0", maxDataCenterId));
         }
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;
@@ -69,7 +72,8 @@ public class SnowflakeIdCenter {
         //如果当前时间小于上一次ID生成的时间戳: 说明系统时钟回退过 - 这个时候应当抛出异常
         if (timestamp < lastTimestamp) {
             throw new RuntimeException(
-                    String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+                String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds",
+                    lastTimestamp - timestamp));
         }
         //如果是同一时间生成的，则进行毫秒内序列
         if (lastTimestamp == timestamp) {
@@ -88,9 +92,9 @@ public class SnowflakeIdCenter {
         lastTimestamp = timestamp;
         //移位并通过或运算拼到一起组成64位的ID
         return ((timestamp - startTime) << timestampMoveBits) //
-                | (dataCenterId << dataCenterIdMoveBits) //
-                | (workerId << workerIdMoveBits) //
-                | sequence;
+            | (dataCenterId << dataCenterIdMoveBits) //
+            | (workerId << workerIdMoveBits) //
+            | sequence;
     }
 
     // 阻塞到下一个毫秒 即 直到获得新的时间戳
