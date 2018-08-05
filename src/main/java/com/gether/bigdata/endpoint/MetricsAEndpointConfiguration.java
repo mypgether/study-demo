@@ -10,18 +10,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MetricsAEndpointConfiguration {
 
-    @Autowired
-    private DeviceService deviceService;
+  @Autowired
+  private DeviceService deviceService;
 
-    @Bean
-    public MetricsAEndpoint endpoint(DeviceService deviceService) {
-        return new MetricsAEndpoint(deviceService);
-    }
+  @Bean
+  public MetricsAEndpoint endpoint(DeviceService deviceService) {
+    return new MetricsAEndpoint(deviceService);
+  }
 
-    @Bean
-    @ConditionalOnBean({MetricsAEndpoint.class})
-    @ConditionalOnEnabledEndpoint("metricsA")
-    public MetricsAMvcEndPoint mvcEndPoint(MetricsAEndpoint endpoint) {
-        return new MetricsAMvcEndPoint(endpoint);
-    }
+  @Bean
+  @ConditionalOnBean({MetricsAEndpoint.class})
+  @ConditionalOnEnabledEndpoint("metricsA")
+  public MetricsAMvcEndPoint mvcEndPoint(MetricsAEndpoint endpoint) {
+    return new MetricsAMvcEndPoint(endpoint);
+  }
 }

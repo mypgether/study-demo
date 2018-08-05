@@ -20,38 +20,38 @@ import java.util.List;
 @Service("elasticJobService")
 public class ElasticJobServiceImpl implements ElasticJobService {
 
-    private int deleteRetryTimes = 3;
+  private int deleteRetryTimes = 3;
 
-    @Resource
-    private CoordinatorRegistryCenter registerCenter;
+  @Resource
+  private CoordinatorRegistryCenter registerCenter;
 
-    @Override
-    public void register(JobRootConfiguration jobRootConfiguration) {
-        new JobScheduler(registerCenter, (LiteJobConfiguration) jobRootConfiguration).init();
-    }
+  @Override
+  public void register(JobRootConfiguration jobRootConfiguration) {
+    new JobScheduler(registerCenter, (LiteJobConfiguration) jobRootConfiguration).init();
+  }
 
-    @Override
-    public Collection<String> delete(String jobName) {
-        List<String> servers = registerCenter.getChildrenKeys(String.format("/%s/servers", jobName));
-        Collection<String> failedServers = Lists.newArrayList();
-        for (int i = 0; i < deleteRetryTimes; i++) {
-            for (String server : servers) {
-                JobOperateAPI operateAPI = new JobOperateAPIImpl(registerCenter);
-                //operateAPI.pause(Optional.of(jobName), Optional.of(server));
-                operateAPI.shutdown(Optional.of(jobName), Optional.of(server));
-                //operateAPI.disable(Optional.of(jobName), Optional.of(server));
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                }
-                failedServers = operateAPI.remove(Optional.of(jobName), Optional.of(server));
-                if (failedServers.size() == 0) {
-                    return failedServers;
-                } else {
-                    servers = (List<String>) failedServers;
-                }
-            }
+  @Override
+  public Collection<String> delete(String jobName) {
+    List<String> servers = registerCenter.getChildrenKeys(String.format("/%s/servers", jobName));
+    Collection<String> failedServers = Lists.newArrayList();
+    for (int i = 0; i < deleteRetryTimes; i++) {
+      for (String server : servers) {
+        JobOperateAPI operateAPI = new JobOperateAPIImpl(registerCenter);
+        //operateAPI.pause(Optional.of(jobName), Optional.of(server));
+        operateAPI.shutdown(Optional.of(jobName), Optional.of(server));
+        //operateAPI.disable(Optional.of(jobName), Optional.of(server));
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
         }
-        return failedServers;
+        failedServers = operateAPI.remove(Optional.of(jobName), Optional.of(server));
+        if (failedServers.size() == 0) {
+          return failedServers;
+        } else {
+          servers = (List<String>) failedServers;
+        }
+      }
     }
+    return failedServers;
+  }
 }

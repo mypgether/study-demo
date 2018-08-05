@@ -10,15 +10,15 @@ import java.util.List;
  */
 public interface UserService {
 
-    public void add(Long id, String name, Integer age);
+  public void add(Long id, String name, Integer age);
 
-    public User getById(Long id);
+  public User getById(Long id);
 
-    public List<User> list();
+  public List<User> list();
 
-    public void update(Long id, String name, Integer age);
+  public void update(Long id, String name, Integer age);
 
-    public void delete(Long id);
+  public void delete(Long id);
 
-    public void deleteAll();
+  public void deleteAll();
 }

@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface DeviceService {
 
-    public void addDevice(boolean rollback);
+  public void addDevice(boolean rollback);
 
-    public List<Device> getDeviceList();
+  public List<Device> getDeviceList();
 
 }

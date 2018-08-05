@@ -20,7 +20,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Watermark {
+public class GetUserName {
 
   public interface Iface {
 

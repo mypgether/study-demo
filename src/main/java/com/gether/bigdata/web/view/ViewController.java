@@ -14,11 +14,11 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class ViewController {
 
-    @RequestMapping("/index")
-    public String index(ModelMap map) {
-        // 加入一个属性，用来在模板中读取
-        map.addAttribute("host", "http://gether.me");
-        // return模板文件的名称，对应src/main/resources/templates/index.html
-        return "index";
-    }
+  @RequestMapping("/index")
+  public String index(ModelMap map) {
+    // 加入一个属性，用来在模板中读取
+    map.addAttribute("host", "http://gether.me");
+    // return模板文件的名称，对应src/main/resources/templates/index.html
+    return "index";
+  }
 }

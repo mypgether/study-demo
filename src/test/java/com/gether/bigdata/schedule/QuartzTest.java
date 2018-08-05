@@ -23,38 +23,39 @@ import java.util.TimeZone;
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class QuartzTest {
-    @Autowired
-    private Scheduler quartzScheduler;
 
-    @Before
-    public void before() throws SchedulerException {
-        quartzScheduler.start();
-    }
+  @Autowired
+  private Scheduler quartzScheduler;
 
-    @Test
-    public void addJob() throws SchedulerException {
-        JobKey jobKey = new JobKey("job-name1", "JobDemoGroup");
-        TriggerKey trikey = new TriggerKey("tri-name1", "JobDemoGroup");
+  @Before
+  public void before() throws SchedulerException {
+    quartzScheduler.start();
+  }
 
-        JobDataMap datamap = new JobDataMap();
-        datamap.put("d1", "19289");
-        JobDetail jobDetail = JobBuilder
-                .newJob(TrunoffJob.class)
-                //.withIdentity(jobKey).usingJobData(null).build();
-                .withIdentity(jobKey).build();
-        Set<Trigger> triggers = new HashSet<Trigger>();
-        triggers.add(TriggerBuilder
-                .newTrigger()
-                .withIdentity(trikey)
-                .usingJobData(datamap)
-                .forJob(jobDetail)
-                .withSchedule(
-                        CronScheduleBuilder
-                                .cronSchedule(
-                                        "*/15 * * * * ?")
-                                .inTimeZone(TimeZone.getTimeZone("UTC"))
-                                .withMisfireHandlingInstructionFireAndProceed())
-                .build());
-        quartzScheduler.scheduleJob(jobDetail, triggers, true);
-    }
+  @Test
+  public void addJob() throws SchedulerException {
+    JobKey jobKey = new JobKey("job-name1", "JobDemoGroup");
+    TriggerKey trikey = new TriggerKey("tri-name1", "JobDemoGroup");
+
+    JobDataMap datamap = new JobDataMap();
+    datamap.put("d1", "19289");
+    JobDetail jobDetail = JobBuilder
+        .newJob(TrunoffJob.class)
+        //.withIdentity(jobKey).usingJobData(null).build();
+        .withIdentity(jobKey).build();
+    Set<Trigger> triggers = new HashSet<Trigger>();
+    triggers.add(TriggerBuilder
+        .newTrigger()
+        .withIdentity(trikey)
+        .usingJobData(datamap)
+        .forJob(jobDetail)
+        .withSchedule(
+            CronScheduleBuilder
+                .cronSchedule(
+                    "*/15 * * * * ?")
+                .inTimeZone(TimeZone.getTimeZone("UTC"))
+                .withMisfireHandlingInstructionFireAndProceed())
+        .build());
+    quartzScheduler.scheduleJob(jobDetail, triggers, true);
+  }
 }

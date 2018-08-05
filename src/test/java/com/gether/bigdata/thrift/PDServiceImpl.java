@@ -66,7 +66,7 @@ package com.gether.bigdata.thrift;//package com.gether.bigdata;
 //	 */
 //	public void writeFile(byte[] bytes) {
 //		try {
-//			OutputStream fos = new FileOutputStream(new File("G:\\001re.jpg"));
+//			OutputStream fos = new FileOutputStream(new File("1.jpg"));
 //			fos.write(bytes);
 //			fos.flush();
 //			fos.close();

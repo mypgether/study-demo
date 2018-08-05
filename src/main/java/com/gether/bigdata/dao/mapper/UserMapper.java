@@ -13,25 +13,28 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select * from T_USER where id=#{id}")
-    User getById(@Param("id") Long id);
 
-    @Select("select id,name,age from T_USER")
-    List<User> getAll();
+  @Select("select * from T_USER where id=#{id}")
+  User getById(@Param("id") Long id);
 
-    @Delete("delete from T_USER where id = #{id}")
-    int delete(@Param("id") Long id);
+  @Select("select id,name,age from T_USER")
+  List<User> getAll();
 
-    @Update("update T_USER set name=#{name},age=#{age} where id=#{id}")
-    void update(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age);
+  @Delete("delete from T_USER where id = #{id}")
+  int delete(@Param("id") Long id);
 
-    @Delete("delete from T_USER")
-    int deleteAll();
+  @Update("update T_USER set name=#{name},age=#{age} where id=#{id}")
+  void update(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age);
 
-    @Insert("INSERT INTO T_USER(id,NAME, AGE) VALUES(#{id},#{name}, #{age})")
-    int insert(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age);
+  @Delete("delete from T_USER")
+  int deleteAll();
+
+  @Insert("INSERT INTO T_USER(id,NAME, AGE) VALUES(#{id},#{name}, #{age})")
+  int insert(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age);
 
 
-    @Insert("INSERT INTO flow_statistic(country,city,flowtype,nettype,size,time,createtime) VALUES(#{country},#{city},#{flowtype},#{nettype},#{size},#{time},now())")
-    int insertFlow(@Param("country") String country, @Param("city") String city, @Param("flowtype") String flowtype, @Param("nettype") String nettype, @Param("size") Long size, @Param("time") Date time);
+  @Insert("INSERT INTO flow_statistic(country,city,flowtype,nettype,size,time,createtime) VALUES(#{country},#{city},#{flowtype},#{nettype},#{size},#{time},now())")
+  int insertFlow(@Param("country") String country, @Param("city") String city,
+      @Param("flowtype") String flowtype, @Param("nettype") String nettype,
+      @Param("size") Long size, @Param("time") Date time);
 }

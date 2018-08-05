@@ -11,6 +11,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD) //设定此注解对应的是方法。
 //不能嵌套调用
 public @interface DistributedLockAnnotation {
-	int timeout() default 10;
-	String key();
+
+  int timeout() default 10;
+
+  String key();
 }

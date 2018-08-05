@@ -5,7 +5,7 @@ package com.gether.bigdata.okhttp;
  */
 public class HttpRequestException extends RuntimeException {
 
-    public HttpRequestException(String httpReslut) {
-        super(httpReslut);
-    }
+  public HttpRequestException(String httpReslut) {
+    super(httpReslut);
+  }
 }

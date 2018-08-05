@@ -1,38 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
-       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+  xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.dangdang.com/schema/ddframe/reg
                         http://www.dangdang.com/schema/ddframe/reg/reg.xsd
                         http://www.dangdang.com/schema/ddframe/job
                         http://www.dangdang.com/schema/ddframe/job/job.xsd
                         ">
-    <!--配置作业注册中心 -->
-    <reg:zookeeper id="registerCenter" server-lists="${elasticjob.servers}" namespace="${elasticjob.namespace}" base-sleep-time-milliseconds="${elasticjob.max.sleeptime}" max-sleep-time-milliseconds="${elasticjob.max.sleeptime}" max-retries="${elasticjob.max.retry}" />
+  <!--配置作业注册中心 -->
+  <reg:zookeeper id="registerCenter" server-lists="${elasticjob.servers}"
+    namespace="${elasticjob.namespace}" base-sleep-time-milliseconds="${elasticjob.max.sleeptime}"
+    max-sleep-time-milliseconds="${elasticjob.max.sleeptime}"
+    max-retries="${elasticjob.max.retry}"/>
 
-    <!-- 配置作业A-->
-    <!--<job:bean id="oneOffElasticJob" class="com.gether.research.jobs.elasticjob.jobbean.OneoffJob" regCenter="regCenter" cron="0/10 * * * * ?"   shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" />-->
-    <!-- 配置作业B-->
-    <!--<job:bean id="perpetualElasticJob" class="xxx.MyPerpetualElasticJob" regCenter="regCenter" cron="0/10 * * * * ?" shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" processCountIntervalSeconds="10" concurrentDataProcessThreadCount="10" />-->
+  <!-- 配置作业A-->
+  <!--<job:bean id="oneOffElasticJob" class="com.gether.research.jobs.elasticjob.jobbean.OneoffJob" regCenter="regCenter" cron="0/10 * * * * ?"   shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" />-->
+  <!-- 配置作业B-->
+  <!--<job:bean id="perpetualElasticJob" class="xxx.MyPerpetualElasticJob" regCenter="regCenter" cron="0/10 * * * * ?" shardingTotalCount="3" shardingItemParameters="0=A,1=B,2=C" processCountIntervalSeconds="10" concurrentDataProcessThreadCount="10" />-->
 
-    <!-- Quartz调度工厂 -->
-    <bean id="quartzScheduler"
-          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="configLocation" value="classpath:quartz.properties" />
-        <property name="schedulerName" value="JobDemoscheduler" />
-        <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动-->
-        <property name="startupDelay" value="30"/>
-        <property name="waitForJobsToCompleteOnShutdown" value="true"/>
-        <property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
-        <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
-        <property name="overwriteExistingJobs" value="true" />
-        <!-- 设置自动启动 -->
-        <property name="autoStartup" value="true" />
+  <!-- Quartz调度工厂 -->
+  <bean id="quartzScheduler"
+    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="configLocation" value="classpath:quartz.properties"/>
+    <property name="schedulerName" value="JobDemoscheduler"/>
+    <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动-->
+    <property name="startupDelay" value="30"/>
+    <property name="waitForJobsToCompleteOnShutdown" value="true"/>
+    <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+    <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+    <property name="overwriteExistingJobs" value="true"/>
+    <!-- 设置自动启动 -->
+    <property name="autoStartup" value="true"/>
 
-        <property name="dataSource" ref="dataSource" />
-        <!--<property name="taskExecutor" ref="taskExecutor"/>-->
-    </bean>
+    <property name="dataSource" ref="dataSource"/>
+    <!--<property name="taskExecutor" ref="taskExecutor"/>-->
+  </bean>
 </beans>

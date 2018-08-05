@@ -19,127 +19,128 @@ import java.util.List;
  * @date: 16/10/22
  */
 @Service("userService")
-public class UserServiceImpl implements  UserService {
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private UserMapper userMapper;
+  @Autowired
+  private UserMapper userMapper;
 
-    @Autowired
-    private JedisService jedisService;
+  @Autowired
+  private JedisService jedisService;
 
-    private static final boolean jdbcMode = false;
+  private static final boolean jdbcMode = false;
 
-    public static int i = 0;
+  public static int i = 0;
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Override
-    public void add(Long id, String name, Integer age) {
-        if (jdbcMode) {
-            jdbcTemplate.update("insert into T_USER(id,NAME, AGE) values(?, ?, ?)", id, name, age);
+  @Override
+  public void add(Long id, String name, Integer age) {
+    if (jdbcMode) {
+      jdbcTemplate.update("insert into T_USER(id,NAME, AGE) values(?, ?, ?)", id, name, age);
+    } else {
+      userMapper.insert(id, name, age);
+      i = i + 1;
+      if (i == 1) {
+        userService.add(IdCenterUtils.getId(), "name2", 2);
+        userService.add(IdCenterUtils.getId(), "name3", 3);
+        userService.add(IdCenterUtils.getId(), "name4", 4);
+        userService.add(IdCenterUtils.getId(), "name5", 5);
+      }
+    }
+  }
+
+  @Override
+  public User getById(Long id) {
+    Object result = jedisService.getObject(String.valueOf(id));
+    if (result == null) {
+      String disLockKey = "distributelock" + String.valueOf(id);
+      try {
+        // 高并发环境下，会导致冲击db的压力，加入分布式锁即可。对锁设置超时时间，防止意外
+        boolean lock = jedisService.setnx(disLockKey, "lock", 10);
+        if (lock) {
+          System.err.println("get lock ...");
+          result = getFromBD(id);
+          if (result != null) {
+            jedisService.setObject(String.valueOf(id), result, 100);
+          }
         } else {
-            userMapper.insert(id, name, age);
-            i = i + 1;
-            if (i == 1) {
-                userService.add(IdCenterUtils.getId(), "name2", 2);
-                userService.add(IdCenterUtils.getId(), "name3", 3);
-                userService.add(IdCenterUtils.getId(), "name4", 4);
-                userService.add(IdCenterUtils.getId(), "name5", 5);
+          try {
+            Thread.sleep(50);
+          } catch (InterruptedException e) {
+          }
+          getById(id);
+        }
+      } finally {
+        // 记得需要释放锁
+        jedisService.delete(disLockKey);
+      }
+    }
+    return (User) result;
+  }
+
+  private User getFromBD(Long id) {
+    System.err.println("get data from db");
+    if (jdbcMode) {
+      return jdbcTemplate.queryForObject("select * from T_USER where id=?", new Object[]{id},
+          new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+              User user = new User();
+              user.setId(resultSet.getLong("id"));
+              user.setName(resultSet.getString("name"));
+              user.setAge(resultSet.getInt("age"));
+              return user;
             }
-        }
+          });
     }
+    return userMapper.getById(id);
+  }
 
-    @Override
-    public User getById(Long id) {
-        Object result = jedisService.getObject(String.valueOf(id));
-        if (result == null) {
-            String disLockKey = "distributelock" + String.valueOf(id);
-            try {
-                // 高并发环境下，会导致冲击db的压力，加入分布式锁即可。对锁设置超时时间，防止意外
-                boolean lock = jedisService.setnx(disLockKey, "lock", 10);
-                if (lock) {
-                    System.err.println("get lock ...");
-                    result = getFromBD(id);
-                    if(result!=null) {
-                        jedisService.setObject(String.valueOf(id), result, 100);
-                    }
-                } else {
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                    }
-                    getById(id);
-                }
-            } finally {
-                // 记得需要释放锁
-                jedisService.delete(disLockKey);
-            }
+  @Override
+  public List<User> list() {
+    if (jdbcMode) {
+      return jdbcTemplate.query("select id,name,age from T_USER", new RowMapper<User>() {
+        @Override
+        public User mapRow(ResultSet resultSet, int i) throws SQLException {
+          User user = new User();
+          user.setId(resultSet.getLong("id"));
+          user.setName(resultSet.getString("name"));
+          user.setAge(resultSet.getInt("age"));
+          return user;
         }
-        return (User) result;
+      });
     }
+    return userMapper.getAll();
+  }
 
-    private User getFromBD(Long id) {
-        System.err.println("get data from db");
-        if (jdbcMode) {
-            return jdbcTemplate.queryForObject("select * from T_USER where id=?", new Object[]{id}, new RowMapper<User>() {
-                @Override
-                public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                    User user = new User();
-                    user.setId(resultSet.getLong("id"));
-                    user.setName(resultSet.getString("name"));
-                    user.setAge(resultSet.getInt("age"));
-                    return user;
-                }
-            });
-        }
-        return userMapper.getById(id);
+  @Override
+  public void update(Long id, String name, Integer age) {
+    if (jdbcMode) {
+      jdbcTemplate.update("update T_USER set name=?,age=? where id=?", name, age, id);
+    } else {
+      userMapper.update(id, name, age);
     }
+  }
 
-    @Override
-    public List<User> list() {
-        if (jdbcMode) {
-            return jdbcTemplate.query("select id,name,age from T_USER", new RowMapper<User>() {
-                @Override
-                public User mapRow(ResultSet resultSet, int i) throws SQLException {
-                    User user = new User();
-                    user.setId(resultSet.getLong("id"));
-                    user.setName(resultSet.getString("name"));
-                    user.setAge(resultSet.getInt("age"));
-                    return user;
-                }
-            });
-        }
-        return userMapper.getAll();
+  @Override
+  public void delete(Long id) {
+    if (jdbcMode) {
+      jdbcTemplate.update("delete from T_USER where id = ?", id);
+    } else {
+      userMapper.delete(id);
     }
+  }
 
-    @Override
-    public void update(Long id, String name, Integer age) {
-        if (jdbcMode) {
-            jdbcTemplate.update("update T_USER set name=?,age=? where id=?", name, age, id);
-        } else {
-            userMapper.update(id, name, age);
-        }
+  @Override
+  public void deleteAll() {
+    if (jdbcMode) {
+      jdbcTemplate.update("delete from T_USER");
+    } else {
+      userMapper.deleteAll();
     }
-
-    @Override
-    public void delete(Long id) {
-        if (jdbcMode) {
-            jdbcTemplate.update("delete from T_USER where id = ?", id);
-        } else {
-            userMapper.delete(id);
-        }
-    }
-
-    @Override
-    public void deleteAll() {
-        if (jdbcMode) {
-            jdbcTemplate.update("delete from T_USER");
-        } else {
-            userMapper.deleteAll();
-        }
-    }
+  }
 }

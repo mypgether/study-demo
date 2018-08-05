@@ -18,4 +18,5 @@ import java.lang.annotation.Target;
 @Documented
 @Import({MetricsAEndpointConfiguration.class})
 public @interface EnableMetricsAEndpoint {
+
 }

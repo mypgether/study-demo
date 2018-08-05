@@ -10,51 +10,51 @@ import java.util.Map;
  */
 public class ProfilePojo {
 
-    private ObjectId id;
-    private String deviceId;
-    private Date createTime;
-    private Date modifyTime;
-    // 不存储到db，外层展示
-    private Map<String, Map<String, Object>> profile;
+  private ObjectId id;
+  private String deviceId;
+  private Date createTime;
+  private Date modifyTime;
+  // 不存储到db，外层展示
+  private Map<String, Map<String, Object>> profile;
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+  public Date getCreateTime() {
+    return createTime;
+  }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
-    public Map<String, Map<String, Object>> getProfile() {
-        return profile;
-    }
+  public Map<String, Map<String, Object>> getProfile() {
+    return profile;
+  }
 
-    public void setProfile(Map<String, Map<String, Object>> profile) {
-        this.profile = profile;
-    }
+  public void setProfile(Map<String, Map<String, Object>> profile) {
+    this.profile = profile;
+  }
 
-    public ObjectId getId() {
-        return id;
-    }
+  public ObjectId getId() {
+    return id;
+  }
 
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+  public void setId(ObjectId id) {
+    this.id = id;
+  }
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+  public String getDeviceId() {
+    return deviceId;
+  }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+  public void setDeviceId(String deviceId) {
+    this.deviceId = deviceId;
+  }
 
 
-    public Date getModifyTime() {
-        return modifyTime;
-    }
+  public Date getModifyTime() {
+    return modifyTime;
+  }
 
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
+  public void setModifyTime(Date modifyTime) {
+    this.modifyTime = modifyTime;
+  }
 }

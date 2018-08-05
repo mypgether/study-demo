@@ -15,29 +15,29 @@ import java.util.List;
 @Service("deviceService")
 public class DeviceServiceImpl implements DeviceService {
 
-    @Autowired
-    private DeviceMapper deviceMapper;
+  @Autowired
+  private DeviceMapper deviceMapper;
 
-    @Override
-    public void addDevice(boolean rollback) {
-        Device record = new Device();
-        record.setDeviceId("deviceid1");
-        record.setName("name1");
-        record.setUid(1000L);
-        record.setComment("comment");
-        deviceMapper.insertSelective(record);
+  @Override
+  public void addDevice(boolean rollback) {
+    Device record = new Device();
+    record.setDeviceId("deviceid1");
+    record.setName("name1");
+    record.setUid(1000L);
+    record.setComment("comment");
+    deviceMapper.insertSelective(record);
 
-        record.setDeviceId("deviceid2");
-        record.setName("name");
-        deviceMapper.insertSelective(record);
-        if (rollback) {
-            throw new RuntimeException("need rollback");
-        }
+    record.setDeviceId("deviceid2");
+    record.setName("name");
+    deviceMapper.insertSelective(record);
+    if (rollback) {
+      throw new RuntimeException("need rollback");
     }
+  }
 
-    @Override
-    public List<Device> getDeviceList() {
-        DeviceExample example = new DeviceExample();
-        return deviceMapper.selectByExample(example);
-    }
+  @Override
+  public List<Device> getDeviceList() {
+    DeviceExample example = new DeviceExample();
+    return deviceMapper.selectByExample(example);
+  }
 }

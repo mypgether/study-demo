@@ -18,17 +18,18 @@ import java.util.List;
 @RequestMapping("/device")
 public class DeviceController {
 
-    @Resource
-    private DeviceService deviceService;
+  @Resource
+  private DeviceService deviceService;
 
-    @RequestMapping(value = "/batchAdd", method = RequestMethod.GET)
-    public String devicebatchAdd(@RequestParam(name = "rollback", required = false) boolean rollback) {
-        deviceService.addDevice(rollback);
-        return "success";
-    }
+  @RequestMapping(value = "/batchAdd", method = RequestMethod.GET)
+  public String devicebatchAdd(
+      @RequestParam(name = "rollback", required = false) boolean rollback) {
+    deviceService.addDevice(rollback);
+    return "success";
+  }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Device> devicelist() {
-        return deviceService.getDeviceList();
-    }
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public List<Device> devicelist() {
+    return deviceService.getDeviceList();
+  }
 }

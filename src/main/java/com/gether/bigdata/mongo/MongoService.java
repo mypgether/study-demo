@@ -5,7 +5,7 @@ package com.gether.bigdata.mongo;
  */
 public interface MongoService {
 
-    public void addProfile();
+  public void addProfile();
 
-    public String getProfile();
+  public String getProfile();
 }

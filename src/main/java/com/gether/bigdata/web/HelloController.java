@@ -14,14 +14,14 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class HelloController {
 
-    @RequestMapping("/hello")
-    @ResponseBody
-    public String index() throws Exception {
-        return "hello";
-    }
+  @RequestMapping("/hello")
+  @ResponseBody
+  public String index() throws Exception {
+    return "hello";
+  }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
-    }
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
+  public String login() {
+    return "login";
+  }
 }

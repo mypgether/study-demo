@@ -5,21 +5,21 @@ package com.gether.bigdata.util;
  */
 public class StringBuilderHelper {
 
-    private final StringBuilder sb = new StringBuilder();
+  private final StringBuilder sb = new StringBuilder();
 
-    public StringBuilderHelper() {
-    }
+  public StringBuilderHelper() {
+  }
 
-    //private static final ThreadLocal<StringBuilderHelper>
-    //        threadLocalStringBuilderHelper = new ThreadLocal<StringBuilderHelper>() {
-    //    @Override
-    //    protected StringBuilderHelper initialValue() {
-    //        return new StringBuilderHelper();
-    //    }
-    //};
+  //private static final ThreadLocal<StringBuilderHelper>
+  //        threadLocalStringBuilderHelper = new ThreadLocal<StringBuilderHelper>() {
+  //    @Override
+  //    protected StringBuilderHelper initialValue() {
+  //        return new StringBuilderHelper();
+  //    }
+  //};
 
-    public StringBuilder getStringBuilder() {
-        sb.setLength(0);
-        return sb;
-    }
+  public StringBuilder getStringBuilder() {
+    sb.setLength(0);
+    return sb;
+  }
 }

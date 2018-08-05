@@ -27,73 +27,85 @@ import java.util.TimeZone;
 @RequestMapping("/jobs")
 public class JobOperationController {
 
-    @Autowired
-    private ElasticJobService elasticJobService;
+  @Autowired
+  private ElasticJobService elasticJobService;
 
-    @Autowired
-    private Scheduler quartzScheduler;
+  @Autowired
+  private Scheduler quartzScheduler;
 
-    @GetMapping("/elastic/add")
-    public String elasticaddJob(@RequestParam(value = "jobName", defaultValue = "demoSimpleJob") String jobName,
-                                @RequestParam(value = "cron", defaultValue = "*/30 * * * * ?") String cron) {
-        // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder(jobName, cron, 1).description("first job").failover(true).jobParameter("parameters").build();
-        // 定义SIMPLE类型配置
-        SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig, MySimpleJob.class.getCanonicalName());
-        // 定义Lite作业根配置
-        JobRootConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig).overwrite(true).build();
-        elasticJobService.register(simpleJobRootConfig);
+  @GetMapping("/elastic/add")
+  public String elasticaddJob(
+      @RequestParam(value = "jobName", defaultValue = "demoSimpleJob") String jobName,
+      @RequestParam(value = "cron", defaultValue = "*/30 * * * * ?") String cron) {
+    // 定义作业核心配置
+    JobCoreConfiguration simpleCoreConfig = JobCoreConfiguration.newBuilder(jobName, cron, 1)
+        .description("first job").failover(true).jobParameter("parameters").build();
+    // 定义SIMPLE类型配置
+    SimpleJobConfiguration simpleJobConfig = new SimpleJobConfiguration(simpleCoreConfig,
+        MySimpleJob.class.getCanonicalName());
+    // 定义Lite作业根配置
+    JobRootConfiguration simpleJobRootConfig = LiteJobConfiguration.newBuilder(simpleJobConfig)
+        .overwrite(true).build();
+    elasticJobService.register(simpleJobRootConfig);
 
-        // 定义作业核心配置
-        JobCoreConfiguration simpleCoreConfig2 = JobCoreConfiguration.newBuilder("simple2Job", "*/5 * * * * ?", 1).build();
-        // 定义SIMPLE类型配置
-        SimpleJobConfiguration simpleJobConfig2 = new SimpleJobConfiguration(simpleCoreConfig2, Simple2Job.class.getCanonicalName());
-        // 定义Lite作业根配置
-        JobRootConfiguration simpleJobRootConfig2 = LiteJobConfiguration.newBuilder(simpleJobConfig2).overwrite(true).build();
-        elasticJobService.register(simpleJobRootConfig2);
-        return "ok";
-    }
+    // 定义作业核心配置
+    JobCoreConfiguration simpleCoreConfig2 = JobCoreConfiguration
+        .newBuilder("simple2Job", "*/5 * * * * ?", 1).build();
+    // 定义SIMPLE类型配置
+    SimpleJobConfiguration simpleJobConfig2 = new SimpleJobConfiguration(simpleCoreConfig2,
+        Simple2Job.class.getCanonicalName());
+    // 定义Lite作业根配置
+    JobRootConfiguration simpleJobRootConfig2 = LiteJobConfiguration.newBuilder(simpleJobConfig2)
+        .overwrite(true).build();
+    elasticJobService.register(simpleJobRootConfig2);
+    return "ok";
+  }
 
-    @GetMapping("/elastic/delete")
-    public Collection<String> elasticdeleteJob(@RequestParam(value = "jobName", defaultValue = "demoSimpleJob") String jobName) {
-        return elasticJobService.delete(jobName);
-    }
+  @GetMapping("/elastic/delete")
+  public Collection<String> elasticdeleteJob(
+      @RequestParam(value = "jobName", defaultValue = "demoSimpleJob") String jobName) {
+    return elasticJobService.delete(jobName);
+  }
 
-    @GetMapping("/quartz/add")
-    public String quartzaddjob(@RequestParam(value = "jobName", defaultValue = "demoJob") String jobName,
-                               @RequestParam(value = "cron", defaultValue = "*/5 * * * * ?") String cron) throws SchedulerException {
-        JobKey jobKey = new JobKey("StartJob", "JobDemoGroup");
-        TriggerKey trikey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
+  @GetMapping("/quartz/add")
+  public String quartzaddjob(
+      @RequestParam(value = "jobName", defaultValue = "demoJob") String jobName,
+      @RequestParam(value = "cron", defaultValue = "*/5 * * * * ?") String cron)
+      throws SchedulerException {
+    JobKey jobKey = new JobKey("StartJob", "JobDemoGroup");
+    TriggerKey trikey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
 
-        JobDataMap datamap = new JobDataMap();
-        datamap.put("jobName", jobName);
-        JobDetail jobDetail = JobBuilder
-                .newJob(TrunoffJob.class)
-                //.withIdentity(jobKey).usingJobData(null).build();
-                .withIdentity(jobKey).build();
-        Set<Trigger> triggers = new HashSet<Trigger>();
-        triggers.add(TriggerBuilder
-                .newTrigger()
-                .withIdentity(trikey)
-                .usingJobData(datamap)
-                .forJob(jobDetail)
-                .withSchedule(
-                        CronScheduleBuilder
-                                .cronSchedule(
-                                        cron)
-                                .inTimeZone(TimeZone.getTimeZone("UTC"))
-                                .withMisfireHandlingInstructionFireAndProceed())
-                .build());
-        quartzScheduler.scheduleJob(jobDetail, triggers, true);
-        return "ok";
-    }
+    JobDataMap datamap = new JobDataMap();
+    datamap.put("jobName", jobName);
+    JobDetail jobDetail = JobBuilder
+        .newJob(TrunoffJob.class)
+        //.withIdentity(jobKey).usingJobData(null).build();
+        .withIdentity(jobKey).build();
+    Set<Trigger> triggers = new HashSet<Trigger>();
+    triggers.add(TriggerBuilder
+        .newTrigger()
+        .withIdentity(trikey)
+        .usingJobData(datamap)
+        .forJob(jobDetail)
+        .withSchedule(
+            CronScheduleBuilder
+                .cronSchedule(
+                    cron)
+                .inTimeZone(TimeZone.getTimeZone("UTC"))
+                .withMisfireHandlingInstructionFireAndProceed())
+        .build());
+    quartzScheduler.scheduleJob(jobDetail, triggers, true);
+    return "ok";
+  }
 
-    @GetMapping("/quartz/delete")
-    public boolean quartzdeleteJob(@RequestParam(value = "jobName", defaultValue = "demoJob") String jobName) throws SchedulerException {
-        //return quartzScheduler.deleteJob(jobKey);
-        //quartzScheduler.pauseJobs(GroupMatcher.jobGroupEquals(jobGroup));
-        JobKey jobKey = new JobKey("StartJob", "JobDemoGroup");
-        TriggerKey triggerkey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
-        return quartzScheduler.unscheduleJob(triggerkey);
-    }
+  @GetMapping("/quartz/delete")
+  public boolean quartzdeleteJob(
+      @RequestParam(value = "jobName", defaultValue = "demoJob") String jobName)
+      throws SchedulerException {
+    //return quartzScheduler.deleteJob(jobKey);
+    //quartzScheduler.pauseJobs(GroupMatcher.jobGroupEquals(jobGroup));
+    JobKey jobKey = new JobKey("StartJob", "JobDemoGroup");
+    TriggerKey triggerkey = new TriggerKey("tri-" + jobName, "JobDemoGroup");
+    return quartzScheduler.unscheduleJob(triggerkey);
+  }
 }

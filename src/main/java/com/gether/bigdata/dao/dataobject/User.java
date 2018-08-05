@@ -10,39 +10,38 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    //@Value("${user.name}")
-    private Long id;
-    private String name;
-    private Integer age;
+  private Long id;
+  private String name;
+  private Integer age;
 
-    // 省略setter和getter
+  // 省略setter和getter
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Integer getAge() {
-        return age;
-    }
+  public Integer getAge() {
+    return age;
+  }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+  public void setAge(Integer age) {
+    this.age = age;
+  }
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this).toString();
-    }
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this).toString();
+  }
 }

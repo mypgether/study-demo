@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AesUtils {
+
   private static Logger log = LoggerFactory.getLogger(AesUtils.class);
 
   private static final String IV_PARAM = "ooasadkc9291ujdm";
@@ -19,8 +20,7 @@ public class AesUtils {
   /**
    * AES加密字符串
    *
-   * @param content  需要被加密的字符串
-   * @param password 加密需要的密码
+   * @param content 需要被加密的字符串
    * @return 密文
    */
   public static String encrypt(String content) {
@@ -40,7 +40,6 @@ public class AesUtils {
    * 解密AES加密过的字符串
    *
    * @param encrypted AES加密过过的内容
-   * @param password  加密时的密码
    * @return 明文
    */
   public static String decrypt(String encrypted) {

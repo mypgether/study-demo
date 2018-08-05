@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="hbaseConnection" class="com.gether.bigdata.hadoop.hbase.HbaseConnection" init-method="init" destroy-method="destroy">
-        <property name="zkQuorum" value="${hbase.zkQuorum}"/>
-        <property name="master" value="${hbase.master}"/>
-        <property name="sessionTimeout" value="${hbase.session.timeout}"/>
-        <property name="init" value="${hbase.init}"/>
-    </bean>
+  <bean id="hbaseConnection" class="com.gether.bigdata.hadoop.hbase.HbaseConnection"
+    init-method="init" destroy-method="destroy">
+    <property name="zkQuorum" value="${hbase.zkQuorum}"/>
+    <property name="master" value="${hbase.master}"/>
+    <property name="sessionTimeout" value="${hbase.session.timeout}"/>
+    <property name="init" value="${hbase.init}"/>
+  </bean>
 
-    <bean id="hiveConnection" class="com.gether.bigdata.hadoop.hive.HiveConnection" init-method="init" destroy-method="destory">
-        <property name="url" value="${hive.url}"/>
-        <property name="username" value="${hive.username}"/>
-        <property name="password" value="${hive.password}"/>
-        <property name="init" value="${hive.init}"/>
-    </bean>
+  <bean id="hiveConnection" class="com.gether.bigdata.hadoop.hive.HiveConnection" init-method="init"
+    destroy-method="destory">
+    <property name="url" value="${hive.url}"/>
+    <property name="username" value="${hive.username}"/>
+    <property name="password" value="${hive.password}"/>
+    <property name="init" value="${hive.init}"/>
+  </bean>
 </beans>

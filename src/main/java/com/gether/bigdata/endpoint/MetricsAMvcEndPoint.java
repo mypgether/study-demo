@@ -11,22 +11,23 @@ import java.util.Collections;
 
 public class MetricsAMvcEndPoint extends EndpointMvcAdapter {
 
-    private MetricsAEndpoint delegate;
+  private MetricsAEndpoint delegate;
 
-    public MetricsAMvcEndPoint(MetricsAEndpoint delegate) {
-        super(delegate);
-        this.delegate = delegate;
-    }
+  public MetricsAMvcEndPoint(MetricsAEndpoint delegate) {
+    super(delegate);
+    this.delegate = delegate;
+  }
 
-    @RequestMapping(
-            method = {RequestMethod.GET}
-    )
-    @ResponseBody
-    public Object invoke() {
-        if (!this.getDelegate().isEnabled()) {
-            return new ResponseEntity(Collections.singletonMap("message", "This endpoint is disabled"), HttpStatus.NOT_FOUND);
-        } else {
-            return delegate.invoke();
-        }
+  @RequestMapping(
+      method = {RequestMethod.GET}
+  )
+  @ResponseBody
+  public Object invoke() {
+    if (!this.getDelegate().isEnabled()) {
+      return new ResponseEntity(Collections.singletonMap("message", "This endpoint is disabled"),
+          HttpStatus.NOT_FOUND);
+    } else {
+      return delegate.invoke();
     }
+  }
 }
